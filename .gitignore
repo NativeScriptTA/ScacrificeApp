@@ -1,0 +1,5 @@
+/lib/
+/.metadata/
+/.tscache
+/node_modules
+/platforms
