@@ -1,0 +1,9 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded">
+  <StackLayout>
+    <Label id='title' text="Hello" class="title"/>
+
+    <Button text="{{buttonLabels[0]}}" id="{{buttonLabels[0]}}" tap="{{menuTapCommand}}"/>
+    <Button text='{{buttonLabels[1]}}' id='{{buttonLabels[1]}}'/>
+    <Button text='{{buttonLabels[2]}}' id='{{buttonLabels[2]}}'/>
+  </StackLayout>
+</Page>
