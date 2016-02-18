@@ -16,14 +16,14 @@ function pageLoaded(args) {
     let mainViewModel = vmModule.mainViewModel;
     page.bindingContext = mainViewModel;
 
-  topmost = frameModule.topmost();
+	topmost = frameModule.topmost();
 
     let gridLayout = view.getViewById(page, "magicElements");
 
     for(i = 1; i <= 40; i++) {
 
-      element = new magicElement.MagicElement("Element " + i, "res://icon", magicElementType.MagicElementType.SOUL);
-      magicElements.push(element);
+    	element = new magicElement.MagicElement("Element " + i + " name name name name", "res://icon", magicElementType.MagicElementType.SOUL);
+    	magicElements.push(element);
     }
 
     mainViewModel.loadMagicElementsOnGrid(gridLayout, magicElements, selectedIndicies);
@@ -35,7 +35,7 @@ function submitMagicElements(eventData) {
     var navigationEntry = {
         moduleName: "./magic-page",
         context: {
-          selectedMagicElements: []
+        	selectedMagicElements: []
         },
         animated: true,
         navigationTransition: {
@@ -44,7 +44,7 @@ function submitMagicElements(eventData) {
     };
 
     for(let i = 0; i < selectedIndicies.length; i++) {
-      navigationEntry.context.selectedMagicElements.push(magicElements[selectedIndicies[i]]);
+    	navigationEntry.context.selectedMagicElements.push(magicElements[selectedIndicies[i]]);
     }
 
     topmost.navigate(navigationEntry);
