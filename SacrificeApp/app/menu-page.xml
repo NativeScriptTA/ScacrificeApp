@@ -1,5 +1,5 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded">
-  <StackLayout>
+  <StackLayout tap="doSomethingPLS">
     <Label id='title' text="Hello" class="title"/>
 
     <Button text="{{buttonLabels[0]}}" id="{{buttonLabels[0]}}" tap="{{menuTapCommand}}"/>

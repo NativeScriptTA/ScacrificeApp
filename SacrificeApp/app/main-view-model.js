@@ -10,7 +10,7 @@ var SelectMagicElementsModel = (function (_super) {
     function SelectMagicElementsModel() {
         _super.call(this);
     }
-    
+
     SelectMagicElementsModel.prototype.loadMagicElementsOnGrid = function(gridLayout, magicElements, selectedIndicies) {
 
             let numberOfColumns = 4;
@@ -68,7 +68,7 @@ var SelectMagicElementsModel = (function (_super) {
                     } else {
 
                         selectedIndicies.splice(selectedIndicies.indexOf(eventData.object.index), 1);
-                        
+
                         length = greenTicks.length;
 
                         for(i = 0; i < length; i++) {

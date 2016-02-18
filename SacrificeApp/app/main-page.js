@@ -4,6 +4,7 @@ var frameModule = require("ui/frame");
 var magicElement = require("./models/magicElement");
 var magicElementType = require("./models/magicElementType.js");
 var vmModule = require("./main-view-model");
+var everlvie = require("./app.js");
 
 let selectedIndicies = [], magicElements = [];
 let topmost;
