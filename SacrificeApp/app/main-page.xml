@@ -1,9 +1,9 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded">
 	<StackLayout>
-		<ScrollView height="480">
-			<GridLayout id="magicElements">
-			</GridLayout>
-		</ScrollView>
-		<Button text="Make Magic" tap="submitMagicElements" />
+	<ScrollView height="480">
+		<GridLayout id="magicElements">
+		</GridLayout>
+	</ScrollView>
+	<Button text="Make Magic" tap="submitMagicElements" />
 	</StackLayout>
 </Page>

@@ -1,6 +1,6 @@
 'use strict';
-
 var magicElementType = require("./magicElementType");
+
 
 class MagicElement {
 
