@@ -1,4 +1,5 @@
 'use strict';
+var dialogs = require("ui/dialogs");
 var view = require("ui/core/view");
 var frameModule = require("ui/frame");
 var magicElement = require("./models/magicElement");
@@ -10,7 +11,7 @@ var imageModule = require("ui/image");
 var platformModule = require("platform");
 var vmModule = require("./magic-setup-view-model");
 var area = require("rectangle-overlap");
-var stackLayout = require("ui/layouts/stack-layout"); 
+var stackLayout = require("ui/layouts/stack-layout");
 var labelModule = require("ui/label");
 
 var screenWidth, screenHeight;
@@ -21,7 +22,7 @@ function pageLoaded(args) {
 
 	screenWidth = platformModule.screen.mainScreen.widthDIPs;
 	screenHeight = platformModule.screen.mainScreen.heightDIPs;
-	
+
 	let page = args.object;
 	let viewModel = new vmModule.MakeMagicModel;
 
@@ -72,15 +73,26 @@ function pageLoaded(args) {
 
   		}, image);
    }
-   
+
    	mainLayout.on(gestures.GestureTypes.longPress, function (args) {
-		showMagicPopUpMenu([ "Sex", "Drugs", "Money" ], magicMenuWidth, magicMenuHeight);
+		//showMagicPopUpMenu([ "Sex", "Drugs", "Money" ], magicMenuWidth, magicMenuHeight);
+		showDailog(geoViewModel.focus)
 	});
 
-	mainLayout.on(gestures.GestureTypes.tap, function(args) {
-		if(isMagicMenuShown == true) {
-			hideMagicPopUpMenu();
-		}
+	// mainLayout.on(gestures.GestureTypes.tap, function(args) {
+	// 	if(isMagicMenuShown == true) {
+	// 		hideMagicPopUpMenu();
+	// 	}
+	// });
+}
+
+function showDailog(focus){
+	dialogs.action({
+		message: focus.message,
+		cancelButtonText: focus.cancelText,
+		actions: focus.focusOptions
+	}).then(function (result) {
+		console.log("Dialog result: " + result)
 	});
 }
 

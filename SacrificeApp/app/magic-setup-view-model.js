@@ -21,7 +21,12 @@ var magicSetupModel = new observable.Observable({
   imageWidth: 45,
   imageHeight: 45,
   magicMenuWidth: 300,
-  magicMenuHeight: 300
+  magicMenuHeight: 300,
+  focus: {
+    cancelFocusSelectionText: "Go Back",
+    focusOptions: ['Crystal', 'Animal Sacrifice', 'Human Sacrifice', 'Mental'],
+    message: "Pick your focus"
+  }
 });
 
 var MakeMagicModel = (function (_super) {
