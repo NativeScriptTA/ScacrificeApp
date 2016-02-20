@@ -1,7 +1,7 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" cssFile="~/name-list.css">
-    <ListView items="{{ names }}" tap="{{ nameTapCommand }}">
+    <ListView items="{{ names }}" itemTap="{{ nameTapCommand }}">
         <ListView.itemTemplate>
-                <Label class="name-list-item" tap="{{ nameTapCommand }}" text="{{ $value }}"></Label>
+                <Label class="name-list-item" text="{{ $value }}"></Label>
         </ListView.itemTemplate>
     </ListView>
 </Page>

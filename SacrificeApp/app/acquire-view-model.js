@@ -5,11 +5,17 @@ var labelModule = require("ui/label");
 var layout = require("ui/layouts/grid-layout");
 
 var SelectMagicElementsModel = (function (_super) {
-
     __extends(SelectMagicElementsModel, _super);
 
     function SelectMagicElementsModel() {
         _super.call(this);
+        this.set("selectedName", "No person selected.");
+    }
+
+    SelectMagicElementsModel.prototype.selectedName = "No name selected.";
+
+    SelectMagicElementsModel.prototype.setSelectedName = function (name) {
+        this.set("selectedName", name);
     }
 
     SelectMagicElementsModel.prototype.loadMagicElementsOnGrid = function(gridLayout, magicElements, selectedIndicies) {

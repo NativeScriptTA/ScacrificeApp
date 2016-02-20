@@ -8,26 +8,29 @@ var everlvie = require("./app.js");
 
 let selectedIndicies = [], magicElements = [];
 let topmost;
+let mainViewModel = vmModule.mainViewModel;
 
 function pageLoaded(args) {
-
     let i, element;
     let page = args.object;
-    let mainViewModel = vmModule.mainViewModel;
-    page.bindingContext = mainViewModel;
 
 	topmost = frameModule.topmost();
+    page.bindingContext = mainViewModel;
 
     let gridLayout = view.getViewById(page, "magicElements");
-
     for(i = 1; i <= 40; i++) {
-
     	element = new magicElement.MagicElement("Element " + i + " name name name name", "res://icon", magicElementType.MagicElementType.SOUL);
     	magicElements.push(element);
     }
 
-    mainViewModel.loadMagicElementsOnGrid(gridLayout, magicElements, selectedIndicies);
+    vmModule.mainViewModel.loadMagicElementsOnGrid(gridLayout, magicElements, selectedIndicies);
+}
 
+exports.onNavigatedTo = function (args) {
+    // funny note
+    var selectedNameString = "What do you want to use on " +
+            args.object.navigationContext.name + "?";
+    args.object.bindingContext.setSelectedName(selectedNameString);
 }
 
 function submitMagicElements(eventData) {
