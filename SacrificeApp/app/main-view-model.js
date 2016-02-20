@@ -11,10 +11,12 @@ var SelectMagicElementsModel = (function (_super) {
     function SelectMagicElementsModel() {
         _super.call(this);
     }
-    
+
     SelectMagicElementsModel.prototype.loadMagicElementsOnGrid = function(gridLayout, magicElements, selectedIndicies) {
 
             let numberOfColumns = 4;
+            let maxSelectedNumber = 5;
+            let currentSelectedNumber = 0;
             let i, label, image, gridColumnIndex, gridRowIndex,
             originalElementWidth, originalElementHeight, element, length, greenTicks = [], labels = [];
 
@@ -43,7 +45,13 @@ var SelectMagicElementsModel = (function (_super) {
 
                     eventData.object.isChecked = !eventData.object.isChecked;
 
+
                     if(eventData.object.isChecked == true) {
+                      
+                      if(currentSelectedNumber == maxSelectedNumber){
+                        console.log("MaxSelected");
+                        return;
+                      }
 
                         selectedIndicies.push(eventData.object.index);
 
@@ -77,11 +85,12 @@ var SelectMagicElementsModel = (function (_super) {
                         gridLayout.addChild(image);
                         layout.GridLayout.setRow(image, eventData.object.rowIndex);
                         layout.GridLayout.setColumn(image, eventData.object.columnIndex);
+                        currentSelectedNumber +=1;
 
                     } else {
 
                         selectedIndicies.splice(selectedIndicies.indexOf(eventData.object.index), 1);
-                        
+
                         length = greenTicks.length;
                         for(i = 0; i < length; i++) {
 
@@ -107,6 +116,7 @@ var SelectMagicElementsModel = (function (_super) {
 
                         eventData.object.width = originalElementWidth;
                         eventData.object.height = originalElementHeight;
+                        currentSelectedNumber -= 1;
                     }
 
                 }, this);
