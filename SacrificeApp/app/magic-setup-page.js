@@ -84,7 +84,7 @@ function pageLoaded(args) {
 								count+=1;
 							}
 						}
-						if(count>0){
+						if(count>1){
 							// console.log("["+g+"]Count: " + count);
 							geoViewModel.slotFilled[g] = true
 						} else{
@@ -92,7 +92,7 @@ function pageLoaded(args) {
 							geoViewModel.slotFilled[g] = false
 						}
 
-						console.log(geoViewModel.slotFilled);
+
 					}
 
 
