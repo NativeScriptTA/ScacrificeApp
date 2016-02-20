@@ -11,9 +11,8 @@ var pentagramPoints = [
   new geometry.Point(startPoint.x - height/4 ,startPoint.y + height),
   new geometry.Point(startPoint.x + height/4 ,startPoint.y + height)
 ]
-var taken = [false,false,false,false,false]
 
-
+var taken = [false, false, false, false, false]
 
 var magicSetupModel = new observable.Observable({
   pentagramPoints: pentagramPoints,
@@ -22,6 +21,10 @@ var magicSetupModel = new observable.Observable({
   imageHeight: 45,
   magicMenuWidth: 300,
   magicMenuHeight: 300,
+  compassWidth: 150,
+  compassHeight: 150,
+  needleWidth: 150,
+  needleHeight: 150,
   focus: {
     cancelFocusSelectionText: "Go Back",
     focusOptions: ['Crystal', 'Animal Sacrifice', 'Human Sacrifice', 'Mental'],

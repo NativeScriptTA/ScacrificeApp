@@ -81,16 +81,16 @@ function pageLoaded(args) {
 
 	
 	let compassImage = new imageModule.Image();
-	compassImage.width = 150;
-	compassImage.height = 150;
+	compassImage.width = geoViewModel.compassWidth;
+	compassImage.height = geoViewModel.compassHeight;
 	compassImage.src = "res://compass";
 	absoluteLayout.AbsoluteLayout.setLeft(compassImage, screenWidth - compassImage.width);
 	absoluteLayout.AbsoluteLayout.setTop(compassImage, screenHeight - (compassImage.height + 80));
 	mainLayout.addChild(compassImage);
 
 	let needleImage = new imageModule.Image();
-	needleImage.width = 150;
-	needleImage.height = 150;
+	needleImage.width = geoViewModel.needleWidth;
+	needleImage.height = geoViewModel.needleHeight;
 	needleImage.src = "res://needle";
 	absoluteLayout.AbsoluteLayout.setLeft(needleImage, screenWidth - needleImage.width);
 	absoluteLayout.AbsoluteLayout.setTop(needleImage, screenHeight - (needleImage.height + 80));
@@ -138,7 +138,7 @@ function createItems(args, itemsOnScreen, imageWidth, imageHeight, mainLayout){
 		 image.width = imageWidth;
 		 image.height = imageHeight;
 		 image.src = items[i].image;
-				 absoluteLayout.AbsoluteLayout.setLeft(image, (imageWidth + 5) * i + 5);
+		 absoluteLayout.AbsoluteLayout.setLeft(image, (imageWidth + 5) * i + 5);
 
 		 mainLayout.addChild(image);
 		 itemsOnScreen.push(image);
@@ -181,42 +181,6 @@ function checkIfPositionsAreOpene(itemsOnScreen, placeholdersPositions, geoViewM
 			geoViewModel.slotFilled[i] = false
 		}
 	}
-}
-
-function showMagicPopUpMenu(menuOptions, width, heigh) {
-
-    magicMenu = new stackLayout.StackLayout();
-    magicMenu.width = width;
-    magicMenu.height = heigh;
-    absoluteLayout.AbsoluteLayout.setLeft(magicMenu, (screenWidth / 2) - (magicMenu.width / 2));
-	absoluteLayout.AbsoluteLayout.setTop(magicMenu, (screenHeight / 2) - (magicMenu.height / 2));
-
-    for(let i = 0; i < menuOptions.length; i++) {
-	    let menuOption = new labelModule.Label();
-	    menuOption.className = "menu-option";
-	    menuOption.textWrap = true;
-	    menuOption.text = menuOptions[i];
-	    menuOption.horizontalAlignment = "center";
-	    menuOption.verticalAlignment = "center";
-
-	    menuOption.on(gestures.GestureTypes.tap, magicPopUpMenuHandler);
-	    magicMenu.addChild(menuOption);
-	}
-
-	mainLayout.addChild(magicMenu);
-
-	isMagicMenuShown = true;
-}
-
-function hideMagicPopUpMenu() {
-	mainLayout.removeChild(magicMenu);
-
-	isMagicMenuShown = false;
-}
-
-function magicPopUpMenuHandler(eventData) {
-
-	console.log(eventData.object.text);
 }
 
 exports.pageLoaded = pageLoaded;
