@@ -17,7 +17,9 @@ var taken = [false,false,false,false,false]
 
 var magicSetupModel = new observable.Observable({
   pentagramPoints: pentagramPoints,
-  slotFilled: taken
+  slotFilled: taken,
+  imageWidth: 45,
+  imageHeight: 45
 });
 
 var MakeMagicModel = (function (_super) {
