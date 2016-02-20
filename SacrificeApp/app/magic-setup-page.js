@@ -10,20 +10,32 @@ var imageModule = require("ui/image");
 var platformModule = require("platform");
 var vmModule = require("./magic-setup-view-model");
 var area = require("rectangle-overlap");
+var stackLayout = require("ui/layouts/stack-layout"); 
+var labelModule = require("ui/label");
+
+var screenWidth, screenHeight;
+var isMagicMenuShown = false;
+var mainLayout, magicMenu;
 
 function pageLoaded(args) {
+
+	screenWidth = platformModule.screen.mainScreen.widthDIPs;
+	screenHeight = platformModule.screen.mainScreen.heightDIPs;
+	
 	let page = args.object;
 	let viewModel = new vmModule.MakeMagicModel;
 
 	let geoViewModel = vmModule.magicModel;
+	let magicMenuWidth = geoViewModel.magicMenuWidth;
+	let magicMenuHeight = geoViewModel.magicMenuHeight;
 	let imageWidth = geoViewModel.imageWidth;
 	let imageHeight = geoViewModel.imageHeight;
 	let placeholdersPositions = geoViewModel.pentagramPoints;
-	let mainLayout = view.getViewById(page, "mainLayout");
+	mainLayout = view.getViewById(page, "mainLayout");
 
 	viewModel.magicElements = args.object.navigationContext.selectedMagicElements;
 
-  page.bindingContext = viewModel;
+	page.bindingContext = viewModel;
 
 	//creating placeHolders
 	makePlaceHolder(placeholdersPositions, imageWidth, imageHeight, mainLayout)
@@ -31,7 +43,7 @@ function pageLoaded(args) {
 	let itemsOnScreen = [];
 	createItems(args, itemsOnScreen, imageWidth, imageHeight, mainLayout);
 
-	for(let i = 0; i < itemsOnScreen.length; i++){
+	for(let i = 0; i < itemsOnScreen.length; i++) {
 		let image = itemsOnScreen[i];
 			//add gesture observer
     image.observe(gestures.GestureTypes.pan, function (eventData) {
@@ -60,6 +72,16 @@ function pageLoaded(args) {
 
   		}, image);
    }
+   
+   	mainLayout.on(gestures.GestureTypes.longPress, function (args) {
+		showMagicPopUpMenu([ "Sex", "Drugs", "Money" ], magicMenuWidth, magicMenuHeight);
+	});
+
+	mainLayout.on(gestures.GestureTypes.tap, function(args) {
+		if(isMagicMenuShown == true) {
+			hideMagicPopUpMenu();
+		}
+	});
 }
 
 function createItems(args, itemsOnScreen, imageWidth, imageHeight, mainLayout){
@@ -113,6 +135,42 @@ function checkIfPositionsAreOpene(itemsOnScreen, placeholdersPositions, geoViewM
 			geoViewModel.slotFilled[i] = false
 		}
 	}
+}
+
+function showMagicPopUpMenu(menuOptions, width, heigh) {
+
+    magicMenu = new stackLayout.StackLayout();
+    magicMenu.width = width;
+    magicMenu.height = heigh;
+    absoluteLayout.AbsoluteLayout.setLeft(magicMenu, (screenWidth / 2) - (magicMenu.width / 2));
+	absoluteLayout.AbsoluteLayout.setTop(magicMenu, (screenHeight / 2) - (magicMenu.height / 2));
+
+    for(let i = 0; i < menuOptions.length; i++) {
+	    let menuOption = new labelModule.Label();
+	    menuOption.className = "menu-option";
+	    menuOption.textWrap = true;
+	    menuOption.text = menuOptions[i];
+	    menuOption.horizontalAlignment = "center";
+	    menuOption.verticalAlignment = "center";
+
+	    menuOption.on(gestures.GestureTypes.tap, magicPopUpMenuHandler);
+	    magicMenu.addChild(menuOption);
+	}
+
+	mainLayout.addChild(magicMenu);
+
+	isMagicMenuShown = true;
+}
+
+function hideMagicPopUpMenu() {
+	mainLayout.removeChild(magicMenu);
+
+	isMagicMenuShown = false;
+}
+
+function magicPopUpMenuHandler(eventData) {
+
+	console.log(eventData.object.text);
 }
 
 exports.pageLoaded = pageLoaded;
