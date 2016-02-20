@@ -32,15 +32,17 @@ function pageLoaded(args) {
    mainLayout = view.getViewById(page, "mainLayout");
 
 	 //creating placeHolders
-   for(i = 0; i < placeholdersPositions.length; i++) {
-		placeholderImage = new imageModule.Image();
-		placeholderImage.width = imageWidth;
-		placeholderImage.height = imageHeight;
-		placeholderImage.src = "res://magicelementplaceholder";
-		absoluteLayout.AbsoluteLayout.setLeft(placeholderImage, placeholdersPositions[i].x);
-		absoluteLayout.AbsoluteLayout.setTop(placeholderImage, placeholdersPositions[i].y);
-		mainLayout.addChild(placeholderImage);
-   }
+	//  for(let i = 0; i < placeholdersPositions.length; i++) {
+	// 		 placeholderImage = new imageModule.Image();
+	// 		 placeholderImage.width = imageWidth;
+	// 		 placeholderImage.height = imageHeight;
+	// 		 placeholderImage.src = "res://magicelementplaceholder";
+	// 		 absoluteLayout.AbsoluteLayout.setLeft(placeholderImage, placeholdersPositions[i].x);
+	// 		 absoluteLayout.AbsoluteLayout.setTop(placeholderImage, placeholdersPositions[i].y);
+	// 		 mainLayout.addChild(placeholderImage);
+	// 	}
+
+		makePlaceHolder(placeholdersPositions, imageWidth, imageHeight, mainLayout)
 
 	 let items = args.object.navigationContext.selectedMagicElements;
 	 let itemsOnScreen = [];
@@ -58,6 +60,8 @@ function pageLoaded(args) {
 
 		for(i = 0; i < items.length; i++){
 			image = itemsOnScreen[i];
+
+			//add gesture observer
       image.observe(gestures.GestureTypes.pan, function (eventData) {
 	        deltaX = eventData.deltaX;
 	        deltaY = eventData.deltaY;
@@ -69,13 +73,13 @@ function pageLoaded(args) {
 	        absoluteLayout.AbsoluteLayout.setLeft(eventData.object, newLeft);
 
 					//check availability of placeHolders
-					checkIfPositionsAreOpene(itemsOnScreen, placeholdersPositions, geoViewModel, placeholderImage);
+					checkIfPositionsAreOpene(itemsOnScreen, placeholdersPositions, geoViewModel, imageWidth, imageHeight);
 
 
 
 	        for(i = 0; i < placeholdersPositions.length; i++) {
 	        	overlapResult = area(newLeft, newTop, eventData.object.width, eventData.object.height, placeholdersPositions[i].x,
-	         		placeholdersPositions[i].y, placeholderImage.width, placeholderImage.height);
+	         		placeholdersPositions[i].y, imageWidth, imageHeight);
 
 	        	if(overlapResult >= 500 && !geoViewModel.slotFilled[i] ) {
 
@@ -88,8 +92,19 @@ function pageLoaded(args) {
    }
 }
 
-function checkIfPositionsAreOpene(itemsOnScreen, placeholdersPositions, geoViewModel, placeholderImage){
-	for(var g = 0; g < placeholdersPositions.length; g++) {
+function makePlaceHolder(placeholdersPositions, imageWidth, imageHeight, mainLayout){
+	for(let i = 0; i < placeholdersPositions.length; i++) {
+			let placeholderImage = new imageModule.Image();
+			placeholderImage.width = imageWidth;
+			placeholderImage.height = imageHeight;
+			placeholderImage.src = "res://magicelementplaceholder";
+			absoluteLayout.AbsoluteLayout.setLeft(placeholderImage, placeholdersPositions[i].x);
+			absoluteLayout.AbsoluteLayout.setTop(placeholderImage, placeholdersPositions[i].y);
+			mainLayout.addChild(placeholderImage);
+	 }
+}
+function checkIfPositionsAreOpene(itemsOnScreen, placeholdersPositions, geoViewModel, imageWidth, imageHeight){
+	for(let i = 0; i < placeholdersPositions.length; i++) {
 		let count = 0;
 
 		for(var k = 0; k < itemsOnScreen.length; k+=1){
@@ -97,8 +112,8 @@ function checkIfPositionsAreOpene(itemsOnScreen, placeholdersPositions, geoViewM
 			let top = absoluteLayout.AbsoluteLayout.getTop(currentItem)
 			let left = absoluteLayout.AbsoluteLayout.getLeft(currentItem)
 			//console.log("Left "+left);
-			var overlapResult = area(left, top, currentItem.width, currentItem.height, placeholdersPositions[g].x,
-			placeholdersPositions[g].y, placeholderImage.width, placeholderImage.height);
+			let overlapResult = area(left, top, currentItem.width, currentItem.height, placeholdersPositions[i].x,
+			placeholdersPositions[i].y, imageWidth, imageHeight);
 
 			if(overlapResult >= 500) {
 				count+=1;
@@ -106,10 +121,10 @@ function checkIfPositionsAreOpene(itemsOnScreen, placeholdersPositions, geoViewM
 		}
 		if(count>1){
 			// console.log("["+g+"]Count: " + count);
-			geoViewModel.slotFilled[g] = true
+			geoViewModel.slotFilled[i] = true
 		} else{
 			// console.log("Freed ["+g+"]Count: " + count);
-			geoViewModel.slotFilled[g] = false
+			geoViewModel.slotFilled[i] = false
 		}
 	}
 }
