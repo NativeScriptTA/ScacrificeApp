@@ -56,11 +56,11 @@ function pageLoaded(args) {
 		      let newLeft = absoluteLayout.AbsoluteLayout.getLeft(eventData.object) + deltaX;
 
 		      if(newTop < 0 || newTop + imageHeight > screenHeight) {
-		      	return 0;
+		      	return;
 		      }
 
 		      if(newLeft < 0 || newLeft + imageWidth > screenWidth) {
-		      	return 0;
+		      	return;
 		      }
 
 		      absoluteLayout.AbsoluteLayout.setTop(eventData.object, newTop);

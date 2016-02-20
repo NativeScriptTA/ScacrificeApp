@@ -3,9 +3,11 @@ var view = require("ui/core/view");
 var frameModule = require("ui/frame");
 var magicElement = require("./models/magicElement");
 var magicElementType = require("./models/magicElementType.js");
+var dialogs = require("ui/dialogs");
 var vmModule = require("./acquire-view-model");
 var everlvie = require("./app.js");
 
+let requiredSelectedElements = 5;
 let selectedIndicies = [], magicElements = [];
 let topmost;
 let mainViewModel = vmModule.mainViewModel;
@@ -35,6 +37,11 @@ exports.onNavigatedTo = function (args) {
 
 function submitMagicElements(eventData) {
 
+    if(selectedIndicies.length != requiredSelectedElements) {
+        dialogs.alert("You must select exactly " + requiredSelectedElements + " elements.");
+        return;
+    }
+
     var navigationEntry = {
         moduleName: "./magic-setup-page",
         context: {
@@ -49,8 +56,6 @@ function submitMagicElements(eventData) {
     for(let i = 0; i < selectedIndicies.length; i++) {
     	navigationEntry.context.selectedMagicElements.push(magicElements[selectedIndicies[i]]);
     }
-
-
 
     topmost.navigate(navigationEntry);
 }

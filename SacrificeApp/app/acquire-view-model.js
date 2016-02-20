@@ -2,6 +2,7 @@
 var observable = require("data/observable");
 var imageModule = require("ui/image");
 var labelModule = require("ui/label");
+var dialogs = require("ui/dialogs");
 var layout = require("ui/layouts/grid-layout");
 
 var SelectMagicElementsModel = (function (_super) {
@@ -22,7 +23,6 @@ var SelectMagicElementsModel = (function (_super) {
 
             let numberOfColumns = 4;
             let maxSelectedNumber = 5;
-            let currentSelectedNumber = 0;
             let i, label, image, gridColumnIndex, gridRowIndex,
             originalElementWidth, originalElementHeight, element, length, greenTicks = [], labels = [];
 
@@ -49,15 +49,14 @@ var SelectMagicElementsModel = (function (_super) {
 
                 image.on("tap", function (eventData) {
 
+                    if(eventData.object.isChecked == false && selectedIndicies.length == maxSelectedNumber) {
+                        dialogs.alert("You must select exactly " + maxSelectedNumber + " elements.");
+                        return;
+                    }
+
                     eventData.object.isChecked = !eventData.object.isChecked;
 
-
                     if(eventData.object.isChecked == true) {
-
-                      if(currentSelectedNumber == maxSelectedNumber){
-                        console.log("MaxSelected");
-                        return;
-                      }
 
                         selectedIndicies.push(eventData.object.index);
 
@@ -91,7 +90,6 @@ var SelectMagicElementsModel = (function (_super) {
                         gridLayout.addChild(image);
                         layout.GridLayout.setRow(image, eventData.object.rowIndex);
                         layout.GridLayout.setColumn(image, eventData.object.columnIndex);
-                        currentSelectedNumber +=1;
 
                     } else {
 
@@ -122,7 +120,6 @@ var SelectMagicElementsModel = (function (_super) {
 
                         eventData.object.width = originalElementWidth;
                         eventData.object.height = originalElementHeight;
-                        currentSelectedNumber -= 1;
                     }
 
                 }, this);
