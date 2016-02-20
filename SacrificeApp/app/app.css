@@ -15,3 +15,11 @@ button {
     color: #284848;
     horizontal-align: center;
 }
+
+.menu-option {
+	font-size: 20;
+	text-decoration: underline;
+	width: 100%;
+	text-align: center;
+	background-color: green;
+}

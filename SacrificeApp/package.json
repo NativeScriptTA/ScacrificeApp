@@ -6,6 +6,7 @@
 		}
 	},
 	"dependencies": {
+		"rectangle-overlap": "^1.0.0",
 		"tns-core-modules": "1.5.2"
 	}
 }
