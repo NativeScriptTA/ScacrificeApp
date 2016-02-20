@@ -3,6 +3,7 @@ var view = require("ui/core/view");
 var frameModule = require("ui/frame");
 var magicElement = require("./models/magicElement");
 var magicElementType = require("./models/magicElementType.js");
+var geometry = require("./models/point")
 var gestures = require("ui/gestures");
 var absoluteLayout = require("ui/layouts/absolute-layout");
 var imageModule = require("ui/image");
@@ -13,11 +14,13 @@ var area = require("rectangle-overlap");
 function pageLoaded(args) {
 
 	let imageWidth = 45, imageHeight = 45;
-	let placeholdersPositions = [ { X: 150, Y: 200 }, { X: 50, Y: 150 }, { X: 250, Y: 150 } ];
+	let geoViewModel = vmModule.magicModel;
+	let placeholdersPositions = geoViewModel.pentagramPoints;
 	let placeholderImage, overlapResult;
 	let image, i, mainLayout, deltaX, deltaY, newTop, newLeft;
 	let page = args.object;
 	let viewModel = new vmModule.MakeMagicModel;
+
 
 	console.log(viewModel);
 	viewModel.magicElements = args.object.navigationContext.selectedMagicElements;
@@ -28,28 +31,34 @@ function pageLoaded(args) {
    console.log("Elements names:");
    mainLayout = view.getViewById(page, "mainLayout");
 
+	 //creating placeHolders
    for(i = 0; i < placeholdersPositions.length; i++) {
 		placeholderImage = new imageModule.Image();
 		placeholderImage.width = imageWidth;
 		placeholderImage.height = imageHeight;
 		placeholderImage.src = "res://magicelementplaceholder";
-		absoluteLayout.AbsoluteLayout.setLeft(placeholderImage, placeholdersPositions[i].X);
-		absoluteLayout.AbsoluteLayout.setTop(placeholderImage, placeholdersPositions[i].Y);
+		absoluteLayout.AbsoluteLayout.setLeft(placeholderImage, placeholdersPositions[i].x);
+		absoluteLayout.AbsoluteLayout.setTop(placeholderImage, placeholdersPositions[i].y);
 		mainLayout.addChild(placeholderImage);
    }
 
-   for (i = 0; i < args.object.navigationContext.selectedMagicElements.length; i++) {
+	 let items = args.object.navigationContext.selectedMagicElements;
+	 let itemsOnScreen = [];
+   for (i = 0; i < items.length; i++) {
 
    		image = new imageModule.Image();
    		image.width = imageWidth;
    		image.height = imageHeight;
-        image.src = args.object.navigationContext.selectedMagicElements[i].image;
-        absoluteLayout.AbsoluteLayout.setLeft(image, (imageWidth + 5) * i + 5);
+      image.src = items[i].image;
+        	absoluteLayout.AbsoluteLayout.setLeft(image, (imageWidth + 5) * i + 5);
 
-        mainLayout.addChild(image);
+      mainLayout.addChild(image);
+			itemsOnScreen.push(image);
+		}
 
-        image.observe(gestures.GestureTypes.pan, function (eventData) {
-
+		for(i = 0; i < items.length; i++){
+			image = itemsOnScreen[i];
+      image.observe(gestures.GestureTypes.pan, function (eventData) {
 	        deltaX = eventData.deltaX;
 	        deltaY = eventData.deltaY;
 
@@ -59,16 +68,45 @@ function pageLoaded(args) {
 	        absoluteLayout.AbsoluteLayout.setTop(eventData.object, newTop);
 	        absoluteLayout.AbsoluteLayout.setLeft(eventData.object, newLeft);
 
+					//check availability of placeHolders
+					for(var g = 0; g < placeholdersPositions.length; g++) {
+						let count = 0;
+
+						for(var k = 0; k < itemsOnScreen.length; k+=1){
+							let currentItem = itemsOnScreen[k]
+							let top = absoluteLayout.AbsoluteLayout.getTop(currentItem)
+							let left = absoluteLayout.AbsoluteLayout.getLeft(currentItem)
+							//console.log("Left "+left);
+							overlapResult = area(left, top, currentItem.width, currentItem.height, placeholdersPositions[g].x,
+							placeholdersPositions[g].y, placeholderImage.width, placeholderImage.height);
+
+							if(overlapResult >= 500) {
+								count+=1;
+							}
+						}
+						if(count>0){
+							// console.log("["+g+"]Count: " + count);
+							geoViewModel.slotFilled[g] = true
+						} else{
+							// console.log("Freed ["+g+"]Count: " + count);
+							geoViewModel.slotFilled[g] = false
+						}
+
+						console.log(geoViewModel.slotFilled);
+					}
+
+
+
 	        for(i = 0; i < placeholdersPositions.length; i++) {
-	        	overlapResult = area(newLeft, newTop, eventData.object.width, eventData.object.height, placeholdersPositions[i].X,
-	         		placeholdersPositions[i].Y, placeholderImage.width, placeholderImage.height);
+	        	overlapResult = area(newLeft, newTop, eventData.object.width, eventData.object.height, placeholdersPositions[i].x,
+	         		placeholdersPositions[i].y, placeholderImage.width, placeholderImage.height);
 
-	        	if(overlapResult >= 500) {
+	        	if(overlapResult >= 500 && !geoViewModel.slotFilled[i] ) {
 
-	        		absoluteLayout.AbsoluteLayout.setTop(eventData.object, placeholdersPositions[i].Y);
-	        		absoluteLayout.AbsoluteLayout.setLeft(eventData.object, placeholdersPositions[i].X);
+	        		absoluteLayout.AbsoluteLayout.setTop(eventData.object, placeholdersPositions[i].y);
+	        		absoluteLayout.AbsoluteLayout.setLeft(eventData.object, placeholdersPositions[i].x);
 	        	}
-	    	}
+	    		}
 
   		}, image);
    }

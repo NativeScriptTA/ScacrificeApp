@@ -155,6 +155,7 @@ var SelectMagicElementsModel = (function (_super) {
         }
     }
 
+
     return SelectMagicElementsModel;
 
 }) (observable.Observable);
