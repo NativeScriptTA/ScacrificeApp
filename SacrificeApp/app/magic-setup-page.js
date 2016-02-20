@@ -13,6 +13,7 @@ var vmModule = require("./magic-setup-view-model");
 var area = require("rectangle-overlap");
 var stackLayout = require("ui/layouts/stack-layout");
 var labelModule = require("ui/label");
+var locationModule = require("location");
 
 var screenWidth, screenHeight;
 var isMagicMenuShown = false;
@@ -75,15 +76,48 @@ function pageLoaded(args) {
    }
 
    	mainLayout.on(gestures.GestureTypes.longPress, function (args) {
-		//showMagicPopUpMenu([ "Sex", "Drugs", "Money" ], magicMenuWidth, magicMenuHeight);
 		showDailog(geoViewModel.focus)
 	});
 
-	// mainLayout.on(gestures.GestureTypes.tap, function(args) {
-	// 	if(isMagicMenuShown == true) {
-	// 		hideMagicPopUpMenu();
-	// 	}
-	// });
+	
+	let compassImage = new imageModule.Image();
+	compassImage.width = 150;
+	compassImage.height = 150;
+	compassImage.src = "res://compass";
+	absoluteLayout.AbsoluteLayout.setLeft(compassImage, screenWidth - compassImage.width);
+	absoluteLayout.AbsoluteLayout.setTop(compassImage, screenHeight - (compassImage.height + 80));
+	mainLayout.addChild(compassImage);
+
+	let needleImage = new imageModule.Image();
+	needleImage.width = 150;
+	needleImage.height = 150;
+	needleImage.src = "res://needle";
+	absoluteLayout.AbsoluteLayout.setLeft(needleImage, screenWidth - needleImage.width);
+	absoluteLayout.AbsoluteLayout.setTop(needleImage, screenHeight - (needleImage.height + 80));
+	mainLayout.addChild(needleImage);
+
+	let currentDirection;
+	let locationOptions = {
+        desiredAccuracy: 3,
+        updateDistance: 0,
+        minimumUpdateTime: 2000,
+        maximumAge: 20000
+    };
+	
+	let locationManager = new locationModule.LocationManager();
+	locationManager.startLocationMonitoring(function (location) {
+
+	    if (currentDirection != location.direction) {
+	    	currentDirection = location.direction;
+	    	needleImage.animate({
+				rotate: currentDirection,
+				duration: 2000
+			});
+	    }
+
+	}, function(error) {
+		console.log(error);
+	}, locationOptions);
 }
 
 function showDailog(focus){
