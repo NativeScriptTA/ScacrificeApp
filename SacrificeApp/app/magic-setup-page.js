@@ -12,7 +12,6 @@ var vmModule = require("./magic-setup-view-model");
 var area = require("rectangle-overlap");
 
 function pageLoaded(args) {
-
 	let page = args.object;
 	let viewModel = new vmModule.MakeMagicModel;
 
@@ -21,7 +20,6 @@ function pageLoaded(args) {
 	let imageHeight = geoViewModel.imageHeight;
 	let placeholdersPositions = geoViewModel.pentagramPoints;
 	let mainLayout = view.getViewById(page, "mainLayout");
-
 
 	viewModel.magicElements = args.object.navigationContext.selectedMagicElements;
 
@@ -35,7 +33,6 @@ function pageLoaded(args) {
 
 	for(let i = 0; i < itemsOnScreen.length; i++){
 		let image = itemsOnScreen[i];
-
 			//add gesture observer
     image.observe(gestures.GestureTypes.pan, function (eventData) {
 	      let deltaX = eventData.deltaX;
@@ -49,8 +46,6 @@ function pageLoaded(args) {
 
 				//check availability of placeHolders
 				checkIfPositionsAreOpene(itemsOnScreen, placeholdersPositions, geoViewModel, imageWidth, imageHeight);
-
-
 
 	      for(let k = 0; k < placeholdersPositions.length; k++) {
 	        let overlapResult = area(newLeft, newTop, eventData.object.width, eventData.object.height, placeholdersPositions[k].x,
@@ -66,6 +61,7 @@ function pageLoaded(args) {
   		}, image);
    }
 }
+
 function createItems(args, itemsOnScreen, imageWidth, imageHeight, mainLayout){
 	let items = args.object.navigationContext.selectedMagicElements;
 	for (let i = 0; i < items.length; i++) {
@@ -80,6 +76,7 @@ function createItems(args, itemsOnScreen, imageWidth, imageHeight, mainLayout){
 		 itemsOnScreen.push(image);
 	 }
 }
+
 function makePlaceHolder(placeholdersPositions, imageWidth, imageHeight, mainLayout){
 	for(let i = 0; i < placeholdersPositions.length; i++) {
 			let placeholderImage = new imageModule.Image();
@@ -91,6 +88,7 @@ function makePlaceHolder(placeholdersPositions, imageWidth, imageHeight, mainLay
 			mainLayout.addChild(placeholderImage);
 	 }
 }
+
 function checkIfPositionsAreOpene(itemsOnScreen, placeholdersPositions, geoViewModel, imageWidth, imageHeight){
 	for(let i = 0; i < placeholdersPositions.length; i++) {
 		let count = 0;
