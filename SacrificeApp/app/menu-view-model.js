@@ -4,7 +4,7 @@ var frame = require("ui/frame");
 
 
 var pagePaths = {
-  "Play": "./main-page"
+  "Play": "./acquire-page"
 }
 var viewModel = new observable({
   buttonLabels: ["Play","Tutorial","About"],

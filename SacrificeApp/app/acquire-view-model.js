@@ -47,7 +47,7 @@ var SelectMagicElementsModel = (function (_super) {
 
 
                     if(eventData.object.isChecked == true) {
-                      
+
                       if(currentSelectedNumber == maxSelectedNumber){
                         console.log("MaxSelected");
                         return;

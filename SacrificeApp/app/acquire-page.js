@@ -3,7 +3,7 @@ var view = require("ui/core/view");
 var frameModule = require("ui/frame");
 var magicElement = require("./models/magicElement");
 var magicElementType = require("./models/magicElementType.js");
-var vmModule = require("./main-view-model");
+var vmModule = require("./acquire-view-model");
 var everlvie = require("./app.js");
 
 let selectedIndicies = [], magicElements = [];
@@ -33,7 +33,7 @@ function pageLoaded(args) {
 function submitMagicElements(eventData) {
 
     var navigationEntry = {
-        moduleName: "./magic-page",
+        moduleName: "./magic-setup-page",
         context: {
         	selectedMagicElements: []
         },
@@ -46,6 +46,8 @@ function submitMagicElements(eventData) {
     for(let i = 0; i < selectedIndicies.length; i++) {
     	navigationEntry.context.selectedMagicElements.push(magicElements[selectedIndicies[i]]);
     }
+
+
 
     topmost.navigate(navigationEntry);
 }

@@ -7,7 +7,7 @@ var gestures = require("ui/gestures");
 var absoluteLayout = require("ui/layouts/absolute-layout");
 var imageModule = require("ui/image");
 var platformModule = require("platform");
-var vmModule = require("./magic-view-model");
+var vmModule = require("./magic-setup-view-model");
 var area = require("rectangle-overlap");
 
 function pageLoaded(args) {
@@ -70,7 +70,7 @@ function pageLoaded(args) {
 	        	}
 	    	}
 
-  		}, image); 
+  		}, image);
    }
 }
 
