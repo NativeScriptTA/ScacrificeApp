@@ -69,31 +69,7 @@ function pageLoaded(args) {
 	        absoluteLayout.AbsoluteLayout.setLeft(eventData.object, newLeft);
 
 					//check availability of placeHolders
-					for(var g = 0; g < placeholdersPositions.length; g++) {
-						let count = 0;
-
-						for(var k = 0; k < itemsOnScreen.length; k+=1){
-							let currentItem = itemsOnScreen[k]
-							let top = absoluteLayout.AbsoluteLayout.getTop(currentItem)
-							let left = absoluteLayout.AbsoluteLayout.getLeft(currentItem)
-							//console.log("Left "+left);
-							overlapResult = area(left, top, currentItem.width, currentItem.height, placeholdersPositions[g].x,
-							placeholdersPositions[g].y, placeholderImage.width, placeholderImage.height);
-
-							if(overlapResult >= 500) {
-								count+=1;
-							}
-						}
-						if(count>1){
-							// console.log("["+g+"]Count: " + count);
-							geoViewModel.slotFilled[g] = true
-						} else{
-							// console.log("Freed ["+g+"]Count: " + count);
-							geoViewModel.slotFilled[g] = false
-						}
-
-
-					}
+					checkIfPositionsAreOpene(itemsOnScreen, placeholdersPositions, geoViewModel, placeholderImage);
 
 
 
@@ -110,6 +86,32 @@ function pageLoaded(args) {
 
   		}, image);
    }
+}
+
+function checkIfPositionsAreOpene(itemsOnScreen, placeholdersPositions, geoViewModel, placeholderImage){
+	for(var g = 0; g < placeholdersPositions.length; g++) {
+		let count = 0;
+
+		for(var k = 0; k < itemsOnScreen.length; k+=1){
+			let currentItem = itemsOnScreen[k]
+			let top = absoluteLayout.AbsoluteLayout.getTop(currentItem)
+			let left = absoluteLayout.AbsoluteLayout.getLeft(currentItem)
+			//console.log("Left "+left);
+			var overlapResult = area(left, top, currentItem.width, currentItem.height, placeholdersPositions[g].x,
+			placeholdersPositions[g].y, placeholderImage.width, placeholderImage.height);
+
+			if(overlapResult >= 500) {
+				count+=1;
+			}
+		}
+		if(count>1){
+			// console.log("["+g+"]Count: " + count);
+			geoViewModel.slotFilled[g] = true
+		} else{
+			// console.log("Freed ["+g+"]Count: " + count);
+			geoViewModel.slotFilled[g] = false
+		}
+	}
 }
 
 exports.pageLoaded = pageLoaded;
