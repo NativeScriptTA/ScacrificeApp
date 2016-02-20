@@ -47,30 +47,38 @@ function pageLoaded(args) {
 
 	for(let i = 0; i < itemsOnScreen.length; i++) {
 		let image = itemsOnScreen[i];
-			//add gesture observer
-    image.observe(gestures.GestureTypes.pan, function (eventData) {
-	      let deltaX = eventData.deltaX;
-	      let deltaY = eventData.deltaY;
+			// add gesture observer
+    	  image.observe(gestures.GestureTypes.pan, function (eventData) {
+		      let deltaX = eventData.deltaX;
+		      let deltaY = eventData.deltaY;
 
-	      let newTop = absoluteLayout.AbsoluteLayout.getTop(eventData.object) + deltaY;
-	      let newLeft = absoluteLayout.AbsoluteLayout.getLeft(eventData.object) + deltaX;
+		      let newTop = absoluteLayout.AbsoluteLayout.getTop(eventData.object) + deltaY;
+		      let newLeft = absoluteLayout.AbsoluteLayout.getLeft(eventData.object) + deltaX;
 
-	      absoluteLayout.AbsoluteLayout.setTop(eventData.object, newTop);
-	      absoluteLayout.AbsoluteLayout.setLeft(eventData.object, newLeft);
+		      if(newTop < 0 || newTop + imageHeight > screenHeight) {
+		      	return 0;
+		      }
 
-				//check availability of placeHolders
-				checkIfPositionsAreOpene(itemsOnScreen, placeholdersPositions, geoViewModel, imageWidth, imageHeight);
+		      if(newLeft < 0 || newLeft + imageWidth > screenWidth) {
+		      	return 0;
+		      }
 
-	      for(let k = 0; k < placeholdersPositions.length; k++) {
-	        let overlapResult = area(newLeft, newTop, eventData.object.width, eventData.object.height, placeholdersPositions[k].x,
-	         	placeholdersPositions[k].y, imageWidth, imageHeight);
+		      absoluteLayout.AbsoluteLayout.setTop(eventData.object, newTop);
+		      absoluteLayout.AbsoluteLayout.setLeft(eventData.object, newLeft);
 
-	        if(overlapResult >= 500 && !geoViewModel.slotFilled[k] ) {
+			   // check availability of placeHolders
+			  checkIfPositionsAreOpene(itemsOnScreen, placeholdersPositions, geoViewModel, imageWidth, imageHeight);
 
-	        	absoluteLayout.AbsoluteLayout.setTop(eventData.object, placeholdersPositions[k].y);
-	        	absoluteLayout.AbsoluteLayout.setLeft(eventData.object, placeholdersPositions[k].x);
-	        }
-	    	}
+		      for(let k = 0; k < placeholdersPositions.length; k++) {
+		        let overlapResult = area(newLeft, newTop, eventData.object.width, eventData.object.height, placeholdersPositions[k].x,
+		         	placeholdersPositions[k].y, imageWidth, imageHeight);
+
+			        if(overlapResult >= 500 && !geoViewModel.slotFilled[k] ) {
+
+			        	absoluteLayout.AbsoluteLayout.setTop(eventData.object, placeholdersPositions[k].y);
+			        	absoluteLayout.AbsoluteLayout.setLeft(eventData.object, placeholdersPositions[k].x);
+			        }
+		       }
 
   		}, image);
    }
