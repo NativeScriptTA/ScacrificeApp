@@ -19,12 +19,13 @@ var DBManager = (function () {
 	        db = dbConnection;
     		db.resultType(sqlite.RESULTSASOBJECT);
     		db.valueType(sqlite.VALUESARENATIVE);
+    		db.execSQL('insert into RegistrationStatus (Status) values (0)');
 	    });
 	}
 
 	DBManager.prototype.insertMagicInfo = function(magicName, magicData, degree, source) {
 		 db.execSQL('insert into magicsHistory (MagicName, MagicData, Degree, Source) values ("' + magicName + '", "' + encodeData(JSON.stringify(magicData)) + '",'
-		 + degree +  ', "' + source + '"")');
+		 + degree +  ', "' + source + '")');
 	}
 
 	DBManager.prototype.getMagicInfoByName = function(name, callback) {
@@ -43,6 +44,25 @@ var DBManager = (function () {
 	        }
 	        callback(result);
     	});
+	}
+
+	DBManager.prototype.setRegistrationStatus = function(status) {
+		db.execSQL('update RegistrationStatus set Status = ' +  status + ' where Id = 1');
+	}
+
+	DBManager.prototype.getRegistrationStatus = function(callback) {
+		db.get('select Status from RegistrationStatus where Id = 1', function(err, loadedData) {
+			let result = "unregistered";
+			if (err) {
+				console.log(err);
+			} else {
+				if(loadedData.Status > 0) {
+					result = "registered";
+				}
+			}
+
+			callback(result);
+		});
 	}
 
 	function encodeData(data) {

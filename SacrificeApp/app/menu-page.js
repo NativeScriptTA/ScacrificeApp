@@ -19,6 +19,11 @@ function pageLoaded(args) {
       console.dump(data);
     });
 
+    global.dbmanager.setRegistrationStatus(1337);
+    global.dbmanager.getRegistrationStatus(function(status) {
+      console.log(status);
+    });
+
     let page = args.object;
     let mainViewModel = menuViewModel.mainViewModel;
     page.bindingContext = menuViewModel.viewModel;
