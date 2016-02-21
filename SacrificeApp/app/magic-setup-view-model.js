@@ -1,6 +1,6 @@
 'use strict';
 var observable = require("data/observable");
-var geometry = require("./models/point")
+var geometry = require("./models/point");
 
 var startPoint = new geometry.Point(150,150);
 var height = 200;
@@ -41,7 +41,6 @@ var MakeMagicModel = (function (_super) {
     }
 
     return MakeMagicModel;
-
 }) (observable.Observable);
 
 exports.MakeMagicModel = MakeMagicModel;

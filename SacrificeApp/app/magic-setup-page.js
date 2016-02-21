@@ -1,5 +1,6 @@
 'use strict';
 var dialogs = require("ui/dialogs");
+var button = require("ui/button");
 var view = require("ui/core/view");
 var frameModule = require("ui/frame");
 var magicElement = require("./models/magicElement");
@@ -13,18 +14,22 @@ var vmModule = require("./magic-setup-view-model");
 var area = require("rectangle-overlap");
 var stackLayout = require("ui/layouts/stack-layout");
 var labelModule = require("ui/label");
+var buttonModule = require("ui/button");
 var geolocation = require("nativescript-geolocation");
 
 var screenWidth, screenHeight;
 var isMagicMenuShown = false;
 var mainLayout, magicMenu;
+var roundedImageButtonModule = require('./custom_views/RoundedImageButton.js');
+var page;
+var initMagicButtonClicks = 0;
 
 function pageLoaded(args) {
 
 	screenWidth = platformModule.screen.mainScreen.widthDIPs;
 	screenHeight = platformModule.screen.mainScreen.heightDIPs;
 
-	let page = args.object;
+	page = args.object;
 	let viewModel = new vmModule.MakeMagicModel;
 
 	let geoViewModel = vmModule.magicModel;
@@ -87,7 +92,7 @@ function pageLoaded(args) {
 		showDailog(geoViewModel.focus)
 	});
 
-	
+
 	let compassImage = new imageModule.Image();
 	compassImage.width = geoViewModel.compassWidth;
 	compassImage.height = geoViewModel.compassHeight;
@@ -111,7 +116,7 @@ function pageLoaded(args) {
         minimumUpdateTime: 2000,
         maximumAge: 20000
     };
-	
+
 	let watchId = geolocation.watchLocation(
 	function (location) {
 		if (location) {
@@ -123,10 +128,10 @@ function pageLoaded(args) {
 			});
 	    }
 		}
-	}, 
+	},
 	function(e){
 		console.log("Error: " + e.message);
-	}, 
+	},
 	locationOptions);
 }
 
@@ -136,14 +141,47 @@ function showDailog(focus){
 		cancelButtonText: focus.cancelText,
 		actions: focus.focusOptions
 	}).then(function (result) {
-		console.log("Dialog result: " + result)
+		var container = page.getViewById('mainLayout');
+		console.log("Dialog result: " + result);
+		addInitMagicButton(container, 60, 60);
+		addInitMagicButton(container, 60, 220);
+		addInitMagicButton(container, 220, 60);
+		addInitMagicButton(container, 220, 220);
 	});
+}
+
+function addInitMagicButton(container, top, left) {
+	var initMagicButton = new buttonModule.Button();
+	initMagicButton.width = 50;
+	initMagicButton.height = 50;
+	initMagicButton.backgroundColor = "red";
+	initMagicButton.borderRadius = 50;
+	initMagicButton.on(button.Button.tapEvent, function (args) {
+		initMagicButtonClicks++;
+
+		if (initMagicButtonClicks == 4) {
+			var label = new labelModule.Label();
+			label.text = "YOU HAVE CLICKED 4 TIMES!";
+
+			absoluteLayout.AbsoluteLayout.setTop(label, top);
+			absoluteLayout.AbsoluteLayout.setLeft(label, left);
+
+			container.addChild(label);
+		}
+
+		container._removeView(args.object);
+	});
+
+	absoluteLayout.AbsoluteLayout.setTop(initMagicButton, top);
+	absoluteLayout.AbsoluteLayout.setLeft(initMagicButton, left);
+
+	container.addChild(initMagicButton);
 }
 
 function remoteDataItemsToMagicElements(remoteData) {
 	let result = [];
 	for(let i = 0; i < remoteData.length; i++) {
-		let magicElement = new magicElement.MagicElement(remoteData[i].name, "res://" + remoteData[i].name, 
+		let magicElement = new magicElement.MagicElement(remoteData[i].name, "res://" + remoteData[i].name,
 			magicElement.MagicElement.parseElementType(remoteData[i].type));
 	}
 	return result;
