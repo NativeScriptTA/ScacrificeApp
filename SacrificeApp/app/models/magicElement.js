@@ -21,6 +21,17 @@ class MagicElement {
 	get type() {
 		return this._type;
 	}
+
+	static parseElementType(name) {
+		switch(name) {
+			case "earth": return magicElementType.MagicElementType.EARTH;
+			case "fire": return magicElementType.MagicElementType.FIRE;
+			case "wind": return magicElementType.MagicElementType.WIND;
+			case "water": return magicElementType.MagicElementType.WATER;
+			case "soul": return magicElementType.MagicElementType.SOUL;
+			default: return -1;
+		}
+	}
 }
 
 exports.MagicElement = MagicElement;

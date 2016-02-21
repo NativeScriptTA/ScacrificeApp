@@ -140,6 +140,15 @@ function showDailog(focus){
 	});
 }
 
+function remoteDataItemsToMagicElements(remoteData) {
+	let result = [];
+	for(let i = 0; i < remoteData.length; i++) {
+		let magicElement = new magicElement.MagicElement(remoteData[i].name, "res://" + remoteData[i].name, 
+			magicElement.MagicElement.parseElementType(remoteData[i].type));
+	}
+	return result;
+}
+
 function createItems(args, itemsOnScreen, imageWidth, imageHeight, mainLayout){
 	let items = args.object.navigationContext.selectedMagicElements;
 	for (let i = 0; i < items.length; i++) {
