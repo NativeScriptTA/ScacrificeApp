@@ -16,7 +16,7 @@ function pageLoaded(args) {
     let i, element;
     let page = args.object;
 
-	topmost = frameModule.topmost();
+	  topmost = frameModule.topmost();
     page.bindingContext = mainViewModel;
 
     let gridLayout = view.getViewById(page, "magicElements");

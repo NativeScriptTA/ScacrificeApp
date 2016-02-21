@@ -23,3 +23,11 @@ button {
 	text-align: center;
 	background-color: green;
 }
+
+.initMagicButton {
+    background-image: url('res://red_button.png');
+    width: 50;
+	height: 50;
+	background-color: 'red';
+	border-radius: 50;
+}

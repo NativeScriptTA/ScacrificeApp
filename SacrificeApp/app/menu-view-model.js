@@ -1,32 +1,35 @@
-'use strict';
-var observable = require("data/observable").Observable;
-var frame = require("ui/frame");
+(function () {
+    'use strict';
+    var observable = require("data/observable").Observable;
+    var frame = require("ui/frame");
 
 
-var pagePaths = {
-  "Play": "./name-list-page",
-  "Tutorial": "./tutorial-page"
-}
-var viewModel = new observable({
-  buttonLabels: ["Play","Tutorial","About"],
-  menuTapCommand: onMenuTapNavigate
-})
+    var pagePaths = {
+      "Play": "./name-list-page",
+      "Tutorial": "./tutorial-page"
+    };
 
-function onMenuTapNavigate(event){
-  let button = event.object;
-  let id = button.id;
-  let topmost = frame.topmost();
-  let navigationEntry = {
-      moduleName: pagePaths[id],
-      animated: true,
-      navigationTransition: {
-          transition: "flip ",
-      }
-  };
+    var viewModel = new observable({
+      buttonLabels: ["Play","Tutorial","About"],
+      menuTapCommand: onMenuTapNavigate
+    });
 
-  topmost.navigate(navigationEntry);
+    function onMenuTapNavigate(event){
+      let button = event.object;
+      let id = button.id;
+      let topmost = frame.topmost();
+      let navigationEntry = {
+          moduleName: pagePaths[id],
+          animated: true,
+          navigationTransition: {
+              transition: "flip ",
+          }
+      };
 
-  console.log(id);
-}
+      topmost.navigate(navigationEntry);
 
-exports.viewModel = viewModel;
+      console.log(id);
+    }
+
+    exports.viewModel = viewModel;
+}());

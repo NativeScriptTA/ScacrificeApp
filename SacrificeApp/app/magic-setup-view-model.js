@@ -29,7 +29,7 @@ var magicSetupModel = new observable.Observable({
     cancelFocusSelectionText: "Go Back",
     focusOptions: ['Crystal', 'Animal Sacrifice', 'Human Sacrifice', 'Mental'],
     message: "Pick your focus"
-  }
+  },
   nameOfTarget: ""
 });
 
