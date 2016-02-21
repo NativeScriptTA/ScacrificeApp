@@ -14,10 +14,9 @@ function pageLoaded(args) {
   //   })
 
     let someMagicData = ["data 1", "data 2", "data 3"];
-    global.dbmanager.insertMagicInfo("name of magic", someMagicData);
+    global.dbmanager.insertMagicInfo("name of magic", someMagicData, 245.92, "source source");
     global.dbmanager.getMagicInfoByName("name of magic", function(data) {
-      console.log(data[0]);
-      console.log(data);
+      console.dump(data);
     });
 
     let page = args.object;

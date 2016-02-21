@@ -13,7 +13,7 @@ var vmModule = require("./magic-setup-view-model");
 var area = require("rectangle-overlap");
 var stackLayout = require("ui/layouts/stack-layout");
 var labelModule = require("ui/label");
-var locationModule = require("location");
+var geolocation = require("nativescript-geolocation");
 
 var screenWidth, screenHeight;
 var isMagicMenuShown = false;
@@ -112,9 +112,9 @@ function pageLoaded(args) {
         maximumAge: 20000
     };
 	
-	let locationManager = new locationModule.LocationManager();
-	locationManager.startLocationMonitoring(function (location) {
-
+	let watchId = geolocation.watchLocation(
+	function (location) {
+		if (location) {
 	    if (currentDirection != location.direction) {
 	    	currentDirection = location.direction;
 	    	needleImage.animate({
@@ -122,10 +122,12 @@ function pageLoaded(args) {
 				duration: 2000
 			});
 	    }
-
-	}, function(error) {
-		console.log(error);
-	}, locationOptions);
+		}
+	}, 
+	function(e){
+		console.log("Error: " + e.message);
+	}, 
+	locationOptions);
 }
 
 function showDailog(focus){
