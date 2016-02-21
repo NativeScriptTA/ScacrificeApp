@@ -5,6 +5,7 @@ var frame = require("ui/frame");
 
 var pagePaths = {
   "Play": "./name-list-page",
+  "Tutorial": "./tutorial-page"
 }
 var viewModel = new observable({
   buttonLabels: ["Play","Tutorial","About"],

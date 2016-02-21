@@ -1,0 +1,4 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded">
+    <Label id="tutorialText" text="To play this game you have to select a person from the list of people, on which you want to use magics. Then you select five ingredients for the spell, a spell focus, and then you obliterate.">
+    </Label>
+</Page>
