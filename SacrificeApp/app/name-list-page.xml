@@ -1,4 +1,4 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" cssFile="~/name-list.css">
+<Page id="page" xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" cssFile="~/name-list.css">
     <ListView items="{{ names }}" itemTap="{{ nameTapCommand }}">
         <ListView.itemTemplate>
                 <Label class="name-list-item" text="{{ $value }}"></Label>

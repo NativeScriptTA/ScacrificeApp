@@ -1,11 +1,16 @@
-.name-list-item {
-    height: 40px;
-    font-family: 'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
+#page {
+    background-image: url('res://paper');
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: danielbd;
     font-size: 40px;
     font-style: normal;
     font-variant: normal;
     font-weight: 500;
+}
 
+.name-list-item {
+    height: 40px;
     text-align: left;
     color: black;
 }
