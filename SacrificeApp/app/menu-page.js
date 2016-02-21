@@ -2,17 +2,23 @@
 var view = require("ui/core/view");
 var frameModule = require("ui/frame");
 var menuViewModel = require("./menu-view-model")
-var everlive = require("./app.js").everlive;
 
 function pageLoaded(args) {
 
-  // var activities = everlive.data('Activities');
+  // var activities = global.everlive.data('Activities');
   //
   //   activities.get(null, function(data) {
   //       console.log(JSON.stringify(data));
   //   }, function(err) {
   //       console.log(err.message);
   //   })
+
+    let someMagicData = ["data 1", "data 2", "data 3"];
+    global.dbmanager.insertMagicInfo("name of magic", someMagicData);
+    global.dbmanager.getMagicInfoByName("name of magic", function(data) {
+      console.log(data[0]);
+      console.log(data);
+    });
 
     let page = args.object;
     let mainViewModel = menuViewModel.mainViewModel;

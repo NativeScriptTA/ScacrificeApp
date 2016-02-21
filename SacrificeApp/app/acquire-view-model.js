@@ -50,6 +50,7 @@ var SelectMagicElementsModel = (function (_super) {
                 image.on("tap", function (eventData) {
 
                     if(eventData.object.isChecked == false && selectedIndicies.length == maxSelectedNumber) {
+                        console.log(selectedIndicies.length);
                         dialogs.alert("You must select exactly " + maxSelectedNumber + " elements.");
                         return;
                     }
