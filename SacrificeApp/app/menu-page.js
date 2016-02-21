@@ -40,8 +40,8 @@ function pageLoaded(args) {
       console.log(err.message);
     })
 
-    let someMagicData = ["data 1", "data 2", "data 3"];
-    global.dbmanager.insertMagicInfo("name of magic", someMagicData, 245.92, "source source");
+    // let someMagicData = ["data 1", "data 2", "data 3"];
+    // global.dbmanager.insertMagicInfo("name of magic", someMagicData, 245.92, "source source");
     global.dbmanager.getMagicInfoByName("name of magic", function(data) {
       console.dump(data);
     });

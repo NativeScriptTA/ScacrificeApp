@@ -41,7 +41,7 @@ function pageLoaded(args) {
 	mainLayout = view.getViewById(page, "mainLayout");
 
 	viewModel.magicElements = args.object.navigationContext.selectedMagicElements;
-
+	geoViewModel.nameOfTarget = args.object.navigationContext.name;
 	page.bindingContext = viewModel;
 
 	//creating placeHolders

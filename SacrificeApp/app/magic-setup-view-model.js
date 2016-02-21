@@ -30,6 +30,7 @@ var magicSetupModel = new observable.Observable({
     focusOptions: ['Crystal', 'Animal Sacrifice', 'Human Sacrifice', 'Mental'],
     message: "Pick your focus"
   }
+  nameOfTarget: ""
 });
 
 var MakeMagicModel = (function (_super) {
