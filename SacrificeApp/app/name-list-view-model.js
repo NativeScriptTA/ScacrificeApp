@@ -31,40 +31,33 @@ var NamesModel = (function (_super) {
         frame.topmost().navigate(navigationEntry);
     }
 
-    NamesModel.prototype.names = new observableArrayModule.ObservableArray([
-        "Archie	Bradley",
-        "Colleen Park",
-        "Tamara	Newton",
-        "Marion	Woods",
-        "Ignacio Salazar",
-        "Elisa Murray",
-        "Bernard Mack",
-        "Jeffrey Lynch",
-        "Myrtle	Lambert",
-        "Malcolm Hammond",
-        "Archie	Bradley",
-        "Colleen Park",
-        "Tamara	Newton",
-        "Marion	Woods",
-        "Ignacio Salazar",
-        "Elisa Murray",
-        "Bernard Mack",
-        "Jeffrey Lynch",
-        "Myrtle	Lambert",
-        "Malcolm Hammond",
-        "Archie	Bradley",
-        "Colleen Park",
-        "Tamara	Newton",
-        "Marion	Woods",
-        "Ignacio Salazar",
-        "Elisa Murray",
-        "Bernard Mack",
-        "Jeffrey Lynch",
-        "Myrtle	Lambert",
-        "Malcolm Hammond",
-    ]);
+    NamesModel.prototype.names = new observableArrayModule.ObservableArray(
+    []
+  );
 
     return NamesModel;
 }) (observable.Observable);
 
-exports.mainViewModel = new NamesModel();
+
+var newNamesModel = new observable.Observable({
+  names: [],
+  tapCommand : tapCommand
+});
+
+function tapCommand (args) {
+    var name = args.object.tex;
+    var acquirePage = './acquire-page';
+    let navigationEntry = {
+        moduleName: acquirePage,
+        animated: true,
+        navigationTransition: {
+            transition: "flip ",
+        },
+        context: {
+            name: name
+        }
+    };
+
+    frame.topmost().navigate(navigationEntry);
+}exports.mainViewModel = new NamesModel();
+exports.newViewModel = newNamesModel;
