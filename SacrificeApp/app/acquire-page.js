@@ -2,26 +2,30 @@
 var view = require("ui/core/view");
 var frameModule = require("ui/frame");
 var magicElement = require("./models/magicElement");
-var magicElementType = require("./models/magicElementType.js");
+var magicElementType = require("./models/magicElementType");
 var dialogs = require("ui/dialogs");
 var vmModule = require("./acquire-view-model");
 var everlvie = require("./app.js");
+<<<<<<< HEAD
 var view = require("ui/core/view");
 var gestures = require("ui/gestures");
 
+=======
+var page;
+>>>>>>> origin/master
 let requiredSelectedElements = 5;
-let selectedIndicies = [], magicElements = [];
+var selectedIndicies = [], magicElements = [];
 let topmost;
 let mainViewModel = vmModule.mainViewModel;
 
 function pageLoaded(args) {
     let i, element;
-    let page = args.object;
+    page = args.object;
     initITemsIfNeeded();
 	  topmost = frameModule.topmost();
     page.bindingContext = mainViewModel;
-    console.log('Data passed');
     console.log(args.object.navigationContext.spellInfo.spellName);
+<<<<<<< HEAD
     let submitImage = view.getViewById(page, "submitImage");
     submitImage.on(gestures.GestureTypes.tap, submitMagicElements); 
 
@@ -32,19 +36,34 @@ function pageLoaded(args) {
     }
 
     vmModule.mainViewModel.loadMagicElementsOnGrid(gridLayout, magicElements, selectedIndicies);
+=======
+>>>>>>> origin/master
 }
 
 exports.onNavigatedTo = function (args) {
-    // funny note
     var selectedNameString = "What do you want to use on " +
     args.object.navigationContext.name + "?";
     args.object.bindingContext.setSelectedName(selectedNameString);
 }
 
 function initITemsIfNeeded(){
-  console.log('Here');
+  console.log('Items recovered');
+
   global.dbmanager.getAllItems(function(data){
-     console.dump(data);
+    console.log('items ----> ');
+    let gridLayout = view.getViewById(page, "magicElements");
+    console.log('items ----> grid found');
+    for(var i = 0; i < data.length; i++) {
+      console.log('items ----> ' + i);
+      console.log('items ----> ' + data[i].name);
+      console.log('items ----> ' + magicElementType.MagicElementType.SOUL);
+    	let element = new magicElement.MagicElement( data[i].name, "res://"+data[i].name, magicElementType.MagicElementType.SOUL);
+      console.log(magicElements.length);
+    	magicElements.push(element);
+    }
+    console.log('items ----> grid found!!!!');
+
+    mainViewModel.loadMagicElementsOnGrid(gridLayout, magicElements, selectedIndicies);
   });
 
 }

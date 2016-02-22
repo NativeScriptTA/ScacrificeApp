@@ -164,20 +164,20 @@
 					scale: {x: 0, y: 0},
 					duration: 5000
 				}).then(function() {
-					if (isErrorShown == true) {
+					if (isErrorShown) {
 						return;
 					}
 					isErrorShown = true;
 
 					let isThereNotClickedButton = false;
 					for(let j = 0; j < magicButtons.length; j++) {
-						if(magicButtons[i].isClicked == false) {
+						if(!magicButtons[i].isClicked) {
 							isThereNotClickedButton = true;
 							break;
 						}
 					}
 
-					if(isThereNotClickedButton == false) {
+					if(!isThereNotClickedButton) {
 						return;
 					}
 
@@ -213,8 +213,10 @@
 					};
 				}
 
-				let focusOptions = geoViewModel.focus.focusOptions;
-				animationManager.applyAnimation(images, platformModule.screen.mainScreen, focusOptions.indexOf(dialogResult));
+				var focusOptions = geoViewModel.focus.focusOptions;
+				var chosenAnimation = focusOptions.indexOf(dialogResult);
+
+				animationManager.applyAnimation(images, platformModule.screen.mainScreen, chosenAnimation);
 			}
 
 			releaseItemArea(absoluteLayout.AbsoluteLayout.getLeft(args.object), absoluteLayout.AbsoluteLayout.getTop(args.object),
