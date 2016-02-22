@@ -10,9 +10,9 @@
 
 		function DBManager() {
 
-			//if (!sqlite.exists(dbname)) {
+			if (!sqlite.exists(dbname)) {
 		        sqlite.copyDatabase(dbname);
-		  //}
+		  	}
 
 		  new sqlite(dbname, function(err, dbConnection) {
 			if (err) {
