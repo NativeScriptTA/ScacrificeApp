@@ -25,9 +25,10 @@
 	var page;
 	var initMagicButtonClicks = 0;
 	var occupiedAreas = [];
-	let itemsOnScreen = [];
+	var itemsOnScreen = [];
+	var magicButtons = [];
 	var dialogResult = "";
-	let geoViewModel = vmModule.magicModel;
+	var geoViewModel = vmModule.magicModel;
 
 	function pageLoaded(args) {
 
@@ -144,9 +145,10 @@
 			cancelButtonText: focus.cancelText,
 			actions: focus.focusOptions
 		}).then(function (result) {
-			var container = page.getViewById('mainLayout');
+			let container = page.getViewById('mainLayout');
 			console.log("Dialog result: " + result);
 			dialogResult = result;
+			magicButtons = [];
 			let pos = getRandomPositionForItem(50, 50);
 			addInitMagicButton(container, pos.X, pos.Y);
 			pos = getRandomPositionForItem(50, 50);
@@ -155,29 +157,63 @@
 			addInitMagicButton(container, pos.X, pos.Y);
 			pos = getRandomPositionForItem(50, 50);
 			addInitMagicButton(container, pos.X, pos.Y);
+
+			let isErrorShown = false;
+			for(let i = 0; i < magicButtons.length; i++) {
+				magicButtons[i].animate({
+					scale: {x: 0, y: 0},
+					duration: 5000
+				}).then(function() {
+					if (isErrorShown == true) {
+						return;
+					}
+					isErrorShown = true;
+
+					let isThereNotClickedButton = false;
+					for(let j = 0; j < magicButtons.length; j++) {
+						if(magicButtons[i].isClicked == false) {
+							isThereNotClickedButton = true;
+							break;
+						}
+					}
+
+					if(isThereNotClickedButton == false) {
+						return;
+					}
+
+					dialogs.alert({
+						title: "Maybe next time",
+						message: "Failed to cast that spell",
+						okButtonText: "Damn it!"
+					});
+				});
+			}
 		});
 	}
 
 	function addInitMagicButton(container, left, top) {
-		var initMagicButton = new buttonModule.Button();
+		let initMagicButton = new buttonModule.Button();
 		initMagicButton.width = 50;
 		initMagicButton.height = 50;
 		initMagicButton.backgroundColor = "red";
 		initMagicButton.borderRadius = 50;
+		initMagicButton.isClicked = false;
+		magicButtons.push(initMagicButton);
 		initMagicButton.on(button.Button.tapEvent, function (args) {
+			args.object.isClicked = true;
 			initMagicButtonClicks++;
 			if (initMagicButtonClicks == 4) {
 				initMagicButtonClicks = 0;
 
-				var images = itemsOnScreen;
-				for (var i = 0; i < images.length; i++) {
+				let images = itemsOnScreen;
+				for (let i = 0; i < images.length; i++) {
 					images[i].position = {
 						x: absoluteLayout.AbsoluteLayout.getLeft(images[i]),
 						y: absoluteLayout.AbsoluteLayout.getTop(images[i])
 					};
 				}
 
-				var focusOptions = geoViewModel.focus.focusOptions;
+				let focusOptions = geoViewModel.focus.focusOptions;
 				animationManager.applyAnimation(images, platformModule.screen.mainScreen, focusOptions.indexOf(dialogResult));
 			}
 
@@ -193,7 +229,6 @@
 	}
 
 	function releaseItemArea(itemLeft, itemTop, itemWidth, itemHeight) {
-		console.log(itemLeft + " " + itemTop + " " + itemWidth + " " + itemHeight);
 		for(let i = 0; i < occupiedAreas.length; i++) {
 			if(area(occupiedAreas[i].left, occupiedAreas[i].top, itemWidth, itemHeight, itemLeft,
 		         	itemTop, itemWidth, itemHeight) > 0) {
