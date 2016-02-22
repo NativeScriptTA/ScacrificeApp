@@ -20,7 +20,7 @@
         AnimationManager.prototype.applyAnimation = function (views, screenMetrics, animation) {
             switch (animation) {
                 case animations.Crystal:
-
+                    this.animateCrystal(views, screenMetrics);
                     break;
                 case animations.AnimalSacrifice:
                     break;
@@ -32,19 +32,83 @@
             }
         };
 
+        AnimationManager.prototype.animateCrystal = function (views, screenMetrics) {
+            animateCrystal(views, screenMetrics);
+        };
+
         AnimationManager.prototype.animateMental = function (views, screenMetrics) {
-            console.log("screen: " + screenMetrics.widthDIPs + " " + screenMetrics.heightDIPs);
             for (let i = 0; i < views.length; i++) {
-                console.log("View size: { " + views[i].width + " " + views[i].height + " }");
                 animateMental(views[i], screenMetrics);
             }
         };
+
+        function animateCrystal(views, screenMetrics) {
+            views[0].animate({
+                translate: {
+                    x: screenMetrics.widthDIPs / 2 - views[0].width / 2 - views[0].position.x,
+                    y: -views[0].position.y}
+            })
+            .then(function (view) {
+                views[0].animate({
+                    opacity: 0,
+                    duration: 2000
+                });
+            });
+
+            views[1].animate({
+                translate: {
+                    x: - views[1].position.x,
+                    y: -views[1].position.y}
+            })
+            .then(function (view) {
+                views[1].animate({
+                    opacity: 0,
+                    duration: 2000
+                });
+            });
+
+            views[2].animate({
+                translate: {
+                    x: screenMetrics.widthDIPs - views[2].width - views[2].position.x,
+                    y: - views[2].position.y}
+            })
+            .then(function (view) {
+                views[2].animate({
+                    opacity: 0,
+                    duration: 2000
+                });
+            });
+
+            views[3].animate({
+                translate: {
+                    x: -views[3].position.x,
+                    y: screenMetrics.heightDIPs - 3 * views[3].height - views[3].position.y}
+            })
+            .then(function (view) {
+                views[3].animate({
+                    opacity: 0,
+                    duration: 2000
+                });
+            });
+
+            views[4].animate({
+                translate: {
+                    x: screenMetrics.widthDIPs - views[4].width - views[4].position.x,
+                    y: screenMetrics.heightDIPs - views[4].height * 3 - views[4].position.y}
+            })
+            .then(function () {
+                views[4].animate({
+                    opacity: 0,
+                    duration: 2000
+                });
+            });
+        }
 
         function animateMental(view, screenMetrics) {
             view.animate({
                 translate: {
                     x: screenMetrics.widthDIPs / 2 - view.width / 2 - view.position.x,
-                    y:screenMetrics.heightDIPs / 2 - view.height - view.position.y}
+                    y: screenMetrics.heightDIPs / 2 - view.height - view.position.y}
                 })
                 .then(function () { return view.animate({ opacity: 1 }); })
                 .then(function () { return view.animate({ scale: { x: 3, y: 3 } }); })

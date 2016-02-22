@@ -176,9 +176,13 @@
 						y: absoluteLayout.AbsoluteLayout.getTop(images[i])
 					};
 				}
-
+				console.log("Dialog result: " + dialogResult);
 				var focusOptions = geoViewModel.focus.focusOptions;
-				animationManager.applyAnimation(images, platformModule.screen.mainScreen, focusOptions.indexOf(dialogResult));
+
+				var chosenAnimation = focusOptions.indexOf(dialogResult);
+				console.log(chosenAnimation);
+				
+				animationManager.applyAnimation(images, platformModule.screen.mainScreen, chosenAnimation);
 			}
 
 			releaseItemArea(absoluteLayout.AbsoluteLayout.getLeft(args.object), absoluteLayout.AbsoluteLayout.getTop(args.object),
