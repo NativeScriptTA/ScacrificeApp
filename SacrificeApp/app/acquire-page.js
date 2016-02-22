@@ -51,8 +51,8 @@ function initITemsIfNeeded(){
     for(var i = 0; i < data.length; i++) {
       console.log('items ----> ' + i);
       console.log('items ----> ' + data[i].name);
-      console.log('items ----> ' + magicElementType.MagicElementType.SOUL);
-    	let element = new magicElement.MagicElement( data[i].name, "res://"+data[i].name, magicElementType.MagicElementType.SOUL);
+      console.log('items ----> ' + data[i].type);
+    	let element = new magicElement.MagicElement( data[i].name, "res://"+data[i].name, magicElement.parseElementType(data[i].type));
       console.log(magicElements.length);
     	magicElements.push(element);
     }
