@@ -61,7 +61,6 @@
 
 		        	}
 		        }
-						console.log("Before callback");
 		        callback(result);
 	    	});
 		};
