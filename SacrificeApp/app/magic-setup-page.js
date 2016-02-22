@@ -23,6 +23,7 @@ var mainLayout, magicMenu;
 var roundedImageButtonModule = require('./custom_views/RoundedImageButton.js');
 var page;
 var initMagicButtonClicks = 0;
+var occupiedAreas = [];
 
 function pageLoaded(args) {
 
@@ -143,14 +144,18 @@ function showDailog(focus){
 	}).then(function (result) {
 		var container = page.getViewById('mainLayout');
 		console.log("Dialog result: " + result);
-		addInitMagicButton(container, 60, 60);
-		addInitMagicButton(container, 60, 220);
-		addInitMagicButton(container, 220, 60);
-		addInitMagicButton(container, 220, 220);
+		let pos = getRandomPositionForItem(50, 50);
+		addInitMagicButton(container, pos.X, pos.Y);
+		pos = getRandomPositionForItem(50, 50);
+		addInitMagicButton(container, pos.X, pos.Y);
+		pos = getRandomPositionForItem(50, 50);
+		addInitMagicButton(container, pos.X, pos.Y);
+		pos = getRandomPositionForItem(50, 50);
+		addInitMagicButton(container, pos.X, pos.Y);
 	});
 }
 
-function addInitMagicButton(container, top, left) {
+function addInitMagicButton(container, left, top) {
 	var initMagicButton = new buttonModule.Button();
 	initMagicButton.width = 50;
 	initMagicButton.height = 50;
@@ -169,6 +174,8 @@ function addInitMagicButton(container, top, left) {
 			container.addChild(label);
 		}
 
+		releaseItemArea(absoluteLayout.AbsoluteLayout.getLeft(args.object), absoluteLayout.AbsoluteLayout.getTop(args.object),
+			args.object.width, args.object.height);
 		container._removeView(args.object);
 	});
 
@@ -176,6 +183,50 @@ function addInitMagicButton(container, top, left) {
 	absoluteLayout.AbsoluteLayout.setLeft(initMagicButton, left);
 
 	container.addChild(initMagicButton);
+}
+
+function releaseItemArea(itemLeft, itemTop, itemWidth, itemHeight) {
+	console.log(itemLeft + " " + itemTop + " " + itemWidth + " " + itemHeight);
+	for(let i = 0; i < occupiedAreas.length; i++) {
+		if(area(occupiedAreas[i].left, occupiedAreas[i].top, itemWidth, itemHeight, itemLeft,
+	         	itemTop, itemWidth, itemHeight) > 0) {
+			occupiedAreas.splice(i, 1);
+			break;
+		}
+	}
+}
+
+function getRandomPositionForItem(itemWidth, itemHeight) {
+	let position = {};
+
+	while(1) {
+		position.X = Math.floor(Math.abs(Math.abs((screenWidth * Math.random())) - itemWidth));
+		position.Y = Math.floor(Math.abs(Math.abs((screenHeight * Math.random())) - (itemHeight + 80)));
+
+		let isValid = true;
+		for(let i = 0; i < occupiedAreas.length; i++) {
+			if(area(occupiedAreas[i].left, occupiedAreas[i].top, itemWidth, itemHeight, position.X,
+		         	position.Y, itemWidth, itemHeight) > 0) {
+				isValid = false;
+				break;
+			}
+		}
+
+		if(isValid == false) {
+			continue;
+		}
+
+		let occupiedArea = {};
+		occupiedArea.left = position.X;
+		occupiedArea.right = position.X + itemWidth;
+		occupiedArea.top = position.Y;
+		occupiedArea.bottom = position.Y + itemHeight;
+		occupiedAreas.push(occupiedArea);
+		break;
+	}
+
+	console.log("Position: " + position.X + " " + position.Y);
+	return position;
 }
 
 function remoteDataItemsToMagicElements(remoteData) {
