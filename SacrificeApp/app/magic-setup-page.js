@@ -28,13 +28,14 @@
 	var itemsOnScreen = [];
 	var magicButtons = [];
 	var dialogResult = "";
+	var workingSpells = [];
 	var geoViewModel = vmModule.magicModel;
 
 	function pageLoaded(args) {
 
 		screenWidth = platformModule.screen.mainScreen.widthDIPs;
 		screenHeight = platformModule.screen.mainScreen.heightDIPs;
-
+		getWorkingSpells();
 		page = args.object;
 		let viewModel = new vmModule.MakeMagicModel();
 		let magicMenuWidth = geoViewModel.magicMenuWidth;
@@ -137,6 +138,28 @@
 			console.log("Error: " + e.message);
 		},
 		locationOptions);
+	}
+
+	function getWorkingSpells(){
+		console.log('Spells ----> Getting Spells');
+		let rituals = global.everlive.data('Rituals');
+		rituals.get()
+			.then(function(data){
+
+			let items = data.result;
+			for (var i = 0; i < items.length; i++) {
+				//console.log(items[i]['UserName']);
+				let spell = {
+					loc: items[i]['Elements'],
+					heading: items[i]['Heading'],
+					source: items[i]['Source']
+				}
+				workingSpells.push(spell);
+			}
+			console.log(workingSpells[0].loc);
+		}, function(err) {
+			console.log(err.message);
+		})
 	}
 
 	function showDailog(focus){
