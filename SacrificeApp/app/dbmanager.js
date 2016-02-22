@@ -42,6 +42,7 @@
 			  name +
 			  '", "' +
 			  type +
+			  '"');
 		};
 
 		DBManager.prototype.getAllItems = function(callback) {
@@ -52,7 +53,7 @@
 		        } else {
 		        	for(let i = 0; i < loadedData.length; i++) {
 		        		let data = {};
-		        		data.name = JloadedData[i].Name;
+		        		data.name = loadedData[i].Name;
 		        		data.type = loadedData[i].Type;
 		        		result.push(data);
 		        	}
