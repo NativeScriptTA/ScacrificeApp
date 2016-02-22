@@ -6,13 +6,10 @@ var magicElementType = require("./models/magicElementType");
 var dialogs = require("ui/dialogs");
 var vmModule = require("./acquire-view-model");
 var everlvie = require("./app.js");
-<<<<<<< HEAD
 var view = require("ui/core/view");
 var gestures = require("ui/gestures");
 
-=======
 var page;
->>>>>>> origin/master
 let requiredSelectedElements = 5;
 var selectedIndicies = [], magicElements = [];
 let topmost;
@@ -25,7 +22,7 @@ function pageLoaded(args) {
 	  topmost = frameModule.topmost();
     page.bindingContext = mainViewModel;
     console.log(args.object.navigationContext.spellInfo.spellName);
-<<<<<<< HEAD
+
     let submitImage = view.getViewById(page, "submitImage");
     submitImage.on(gestures.GestureTypes.tap, submitMagicElements); 
 
@@ -36,8 +33,6 @@ function pageLoaded(args) {
     }
 
     vmModule.mainViewModel.loadMagicElementsOnGrid(gridLayout, magicElements, selectedIndicies);
-=======
->>>>>>> origin/master
 }
 
 exports.onNavigatedTo = function (args) {
