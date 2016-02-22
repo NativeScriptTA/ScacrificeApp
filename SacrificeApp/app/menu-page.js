@@ -18,7 +18,7 @@ function pageLoaded(args) {
           userIndex = i;
         }
       }
-      
+
       if(userIndex < 0){
 
         var acquirePage = './reg-page';

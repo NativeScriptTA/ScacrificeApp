@@ -47,17 +47,15 @@ var newNamesModel = new observable.Observable({
 });
 
 function tapCommand (args) {
-    var name = args.object.text;
-    var acquirePage = './spell-book-page';
+    global.targeId = args.object.id;
+    console.log(global.targeId);
+    var acquirePage = './name-list-page';
     let navigationEntry = {
         moduleName: acquirePage,
         animated: true,
         navigationTransition: {
             transition: "flip ",
         },
-        context: {
-            name: name
-        }
     };
 
     frame.topmost().navigate(navigationEntry);
