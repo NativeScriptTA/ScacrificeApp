@@ -17,15 +17,16 @@ function pageLoaded(args) {
 
     users.get(null, function(data) {
       let items = data.result;
-      let currentUser;
-
+      let userIndex = -1;
+      console.log("-------> " + items.length);
       for (var i = 0; i < items.length; i++) {
+        console.log("-------> " + i);
         if(global.deviceID === items[i]['DeviceId']){
-          global.currentUser = items[i];
+          console.log("-------> " + items[i]['DeviceId']);
+          userIndex = i;
         }
       }
-      if(global.currentUser === {}){
-
+      if(userIndex < 0){
 
         var acquirePage = './reg-page';
         let navigationEntry = {
@@ -37,6 +38,7 @@ function pageLoaded(args) {
         };
         frameModule.topmost().navigate(navigationEntry);
       } else {
+        global.currentUser = items[userIndex];
         console.log("Already Registerd Device");
       }
     }, function(err) {
@@ -44,10 +46,10 @@ function pageLoaded(args) {
     })
 
     let someMagicData = ["data 1", "data 2", "data 3"];
-    global.dbmanager.insertMagicInfo("name of magic", someMagicData, 245.92, "source source");
-    global.dbmanager.getMagicInfoByName("name of magic", function(data) {
-      console.dump(data);
-    });
+    //global.dbmanager.insertMagicInfo("name of magic", someMagicData, 245.92, "source source");
+    // global.dbmanager.getMagicInfoByName("name of magic", function(data) {
+    //   console.dump(data);
+    // });
 
     let page = args.object;
     let mainViewModel = menuViewModel.mainViewModel;
