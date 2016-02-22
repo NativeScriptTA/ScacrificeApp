@@ -33,6 +33,7 @@
 	var geoViewModel = vmModule.magicModel;
 	var items = [];
 	var elementMagicalPositions = [];
+	var chosenFocus = '';
 
 	function pageLoaded(args) {
 
@@ -193,6 +194,32 @@
 		})
 	}
 
+	function checkIfMagicIsSuccessful(){
+
+
+		for (var i = 0; i < workingSpells.length; i++) {
+			console.log('----> spell' + i);
+			let isCorrect = true;
+			for (var j = 0; j < elementMagicalPositions.length; j++) {
+				console.log(workingSpells[i].loc[j]);
+				if(elementMagicalPositions[j] !== parse(workingSpells[i].loc[j])){
+					console.log("Mismathc "+(elementMagicalPositions[j] + " vs " +  parse(workingSpells[i].loc[j])));
+				}
+			}
+		}
+	}
+
+	function parse(name){
+		switch(name) {
+			case "Earth": return magicElementType.MagicElementType.EARTH;
+			case "Fire": return magicElementType.MagicElementType.FIRE;
+			case "Air": return magicElementType.MagicElementType.WIND;
+			case "Water": return magicElementType.MagicElementType.WATER;
+			case "Soul": return magicElementType.MagicElementType.SOUL;
+			default: return -1;
+		}
+	}
+
 	function showDailog(focus){
 		dialogs.action({
 			message: focus.message,
@@ -232,7 +259,7 @@
 					}
 
 					if(!isThereNotClickedButton) {
-						
+
 						return;
 					}
 
@@ -258,9 +285,10 @@
 		initMagicButton.on(button.Button.tapEvent, function (args) {
 			args.object.isClicked = true;
 			initMagicButtonClicks++;
+
 			if (initMagicButtonClicks == 4) {
 				initMagicButtonClicks = 0;
-
+				checkIfMagicIsSuccessful()
 				let images = itemsOnScreen;
 				for (let i = 0; i < images.length; i++) {
 					images[i].position = {
@@ -286,6 +314,8 @@
 
 		container.addChild(initMagicButton);
 	}
+
+
 
 	function releaseItemArea(itemLeft, itemTop, itemWidth, itemHeight) {
 		for(let i = 0; i < occupiedAreas.length; i++) {
