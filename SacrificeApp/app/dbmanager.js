@@ -12,17 +12,17 @@
 
 			if (!sqlite.exists(dbname)) {
 		        sqlite.copyDatabase(dbname);
-		    }
+		  }
 
-		    new sqlite(dbname, function(err, dbConnection) {
-				if (err) {
-				    console.log(err);
-				}
-		        db = dbConnection;
-	    		db.resultType(sqlite.RESULTSASOBJECT);
-	    		db.valueType(sqlite.VALUESARENATIVE);
-	    		db.execSQL('insert into RegistrationStatus (Status) values (0)');
-		    });
+		  new sqlite(dbname, function(err, dbConnection) {
+			if (err) {
+		    console.log(err);
+			}
+		  db = dbConnection;
+	    db.resultType(sqlite.RESULTSASOBJECT);
+	    db.valueType(sqlite.VALUESARENATIVE);
+	    db.execSQL('insert into RegistrationStatus (Status) values (0)');
+		  });
 		}
 
 		DBManager.prototype.insertMagicInfo = function(magicName, magicData, degree, source) {
@@ -42,6 +42,7 @@
 			  name +
 			  '", "' +
 			  type +
+				'")');
 		};
 
 		DBManager.prototype.getAllItems = function(callback) {

@@ -15,7 +15,7 @@ let mainViewModel = vmModule.mainViewModel;
 function pageLoaded(args) {
     let i, element;
     let page = args.object;
-
+    initITemsIfNeeded();
 	  topmost = frameModule.topmost();
     page.bindingContext = mainViewModel;
 
@@ -33,6 +33,13 @@ exports.onNavigatedTo = function (args) {
     var selectedNameString = "What do you want to use on " +
             args.object.navigationContext.name + "?";
     args.object.bindingContext.setSelectedName(selectedNameString);
+}
+
+function initITemsIfNeeded(){
+   global.dbmanager.getAllItems(function(data){
+      console.log(data.length);
+  });
+
 }
 
 function submitMagicElements(eventData) {
