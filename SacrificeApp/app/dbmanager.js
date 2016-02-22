@@ -10,9 +10,9 @@
 
 		function DBManager() {
 
-			if (!sqlite.exists(dbname)) {
+			//if (!sqlite.exists(dbname)) {
 		        sqlite.copyDatabase(dbname);
-		  }
+		  //}
 
 		  new sqlite(dbname, function(err, dbConnection) {
 			if (err) {
@@ -46,18 +46,26 @@
 		};
 
 		DBManager.prototype.getAllItems = function(callback) {
+			console.log("BeforeAll");
 			db.all('select Name, Type from Items', function (err, loadedData) {
+				console.log("Before Error");
 				var result = [];
 		        if (err) {
 		            console.log(err);
-		        } else {
+		        }
+						else {
+							console.log(loadedData.length);
 		        	for(let i = 0; i < loadedData.length; i++) {
+								console.log("Before callback " + i);
 		        		let data = {};
-		        		data.name = JloadedData[i].Name;
+		        		data.name = loadedData[i].Name;
 		        		data.type = loadedData[i].Type;
+
 		        		result.push(data);
+
 		        	}
 		        }
+						console.log("Before callback");
 		        callback(result);
 	    	});
 		};

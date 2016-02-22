@@ -36,8 +36,9 @@ exports.onNavigatedTo = function (args) {
 }
 
 function initITemsIfNeeded(){
+  console.log('Here');
    global.dbmanager.getAllItems(function(data){
-      console.log(data.length);
+     console.dump(data);
   });
 
 }
