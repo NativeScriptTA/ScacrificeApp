@@ -16,9 +16,10 @@
 	var stackLayout = require("ui/layouts/stack-layout");
 	var labelModule = require("ui/label");
 	var buttonModule = require("ui/button");
-	var geolocation = require("nativescript-geolocation");
 	var animationManager = require('./animations/AnimationManager.js').AnimationManager;
 
+	var geolocation;
+	var needleImage;
 	var screenWidth, screenHeight;
 	var isMagicMenuShown = false;
 	var mainLayout, magicMenu;
@@ -37,6 +38,17 @@
 
 		screenWidth = platformModule.screen.mainScreen.widthDIPs;
 		screenHeight = platformModule.screen.mainScreen.heightDIPs;
+		isMagicMenuShown = false;
+		initMagicButtonClicks = 0;
+		occupiedAreas = [];
+		itemsOnScreen = [];
+		magicButtons = [];
+		dialogResult = "";
+		workingSpells = [];
+		geoViewModel = vmModule.magicModel;
+		items = [];
+		elementMagicalPositions = [];
+
 		getWorkingSpells();
 		page = args.object;
 		let viewModel = new vmModule.MakeMagicModel();
@@ -47,6 +59,8 @@
 		let placeholdersPositions = geoViewModel.pentagramPoints;
 		mainLayout = view.getViewById(page, "mainLayout");
 
+		console.log("itemsOnScreen");
+		console.log(itemsOnScreen.length);
 		viewModel.magicElements = args.object.navigationContext.selectedMagicElements;
 		geoViewModel.nameOfTarget = args.object.navigationContext.name;
 		page.bindingContext = viewModel;
@@ -109,7 +123,7 @@
 		absoluteLayout.AbsoluteLayout.setTop(compassImage, screenHeight - (compassImage.height + 80));
 		mainLayout.addChild(compassImage);
 
-		let needleImage = new imageModule.Image();
+		needleImage = new imageModule.Image();
 		needleImage.width = geoViewModel.needleWidth;
 		needleImage.height = geoViewModel.needleHeight;
 		needleImage.src = "res://needle";
@@ -125,11 +139,15 @@
 	        maximumAge: 20000
 	    };
 
+ 		geolocation = require("nativescript-geolocation");
+
+ 		console.log("will rotate");
 		let watchId = geolocation.watchLocation(
 		function (location) {
 			if (location) {
 		    if (currentDirection != location.direction) {
 		    	currentDirection = location.direction;
+		    	console.log("rotating");
 		    	needleImage.animate({
 					rotate: currentDirection,
 					duration: 2000
@@ -141,6 +159,7 @@
 			console.log("Error: " + e.message);
 		},
 		locationOptions);
+
 	}
 
 	function clearPositions(geoViewModel){
@@ -213,9 +232,11 @@
 					}
 
 					if(!isThereNotClickedButton) {
+						
 						return;
 					}
 
+					container._removeView(needleImage);
 					dialogs.alert({
 						title: "Maybe next time",
 						message: "Failed to cast that spell",
@@ -252,6 +273,7 @@
 				var chosenAnimation = focusOptions.indexOf(dialogResult);
 
 				animationManager.applyAnimation(images, platformModule.screen.mainScreen, chosenAnimation);
+				container._removeView(needleImage);
 			}
 
 			releaseItemArea(absoluteLayout.AbsoluteLayout.getLeft(args.object), absoluteLayout.AbsoluteLayout.getTop(args.object),
