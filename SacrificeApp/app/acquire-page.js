@@ -6,6 +6,8 @@ var magicElementType = require("./models/magicElementType.js");
 var dialogs = require("ui/dialogs");
 var vmModule = require("./acquire-view-model");
 var everlvie = require("./app.js");
+var view = require("ui/core/view");
+var gestures = require("ui/gestures");
 
 let requiredSelectedElements = 5;
 let selectedIndicies = [], magicElements = [];
@@ -20,6 +22,9 @@ function pageLoaded(args) {
     page.bindingContext = mainViewModel;
     console.log('Data passed');
     console.log(args.object.navigationContext.spellInfo.spellName);
+    let submitImage = view.getViewById(page, "submitImage");
+    submitImage.on(gestures.GestureTypes.tap, submitMagicElements); 
+
     let gridLayout = view.getViewById(page, "magicElements");
     for(i = 1; i <= 40; i++) {
     	element = new magicElement.MagicElement("Element " + i + " name name name name", "res://icon", magicElementType.MagicElementType.SOUL);
@@ -32,7 +37,7 @@ function pageLoaded(args) {
 exports.onNavigatedTo = function (args) {
     // funny note
     var selectedNameString = "What do you want to use on " +
-            args.object.navigationContext.name + "?";
+    args.object.navigationContext.name + "?";
     args.object.bindingContext.setSelectedName(selectedNameString);
 }
 
@@ -70,4 +75,4 @@ function submitMagicElements(eventData) {
 }
 
 exports.pageLoaded = pageLoaded;
-exports.submitMagicElements = submitMagicElements;
+
