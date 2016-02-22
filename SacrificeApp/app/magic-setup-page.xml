@@ -1,6 +1,4 @@
 <Page xmlns="http://www.nativescript.org/tns.xsd" loaded="pageLoaded">
   <AbsoluteLayout id="mainLayout">
-  	<StackLayout id="childLayout">
-  	</StackLayout>
   </AbsoluteLayout>
 </Page>
