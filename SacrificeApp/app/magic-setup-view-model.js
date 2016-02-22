@@ -12,7 +12,7 @@ var pentagramPoints = [
   new geometry.Point(startPoint.x + height/4 ,startPoint.y + height)
 ]
 
-var taken = [false, false, false, false, false]
+var taken = [0, 0, 0, 0, 0]
 
 var magicSetupModel = new observable.Observable({
   pentagramPoints: pentagramPoints,

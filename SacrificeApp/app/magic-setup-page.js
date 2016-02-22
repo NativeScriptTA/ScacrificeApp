@@ -30,6 +30,8 @@
 	var dialogResult = "";
 	var workingSpells = [];
 	var geoViewModel = vmModule.magicModel;
+	var items = [];
+	var elementMagicalPositions = [];
 
 	function pageLoaded(args) {
 
@@ -78,13 +80,14 @@
 
 				   // check availability of placeHolders
 				  checkIfPositionsAreOpene(itemsOnScreen, placeholdersPositions, geoViewModel, imageWidth, imageHeight);
+					clearPositions(geoViewModel);
 
 			      for(let k = 0; k < placeholdersPositions.length; k++) {
 			        let overlapResult = area(newLeft, newTop, eventData.object.width, eventData.object.height, placeholdersPositions[k].x,
 			         	placeholdersPositions[k].y, imageWidth, imageHeight);
 
-				        if(overlapResult >= 500 && !geoViewModel.slotFilled[k] ) {
-
+				        if(overlapResult >= 500 && geoViewModel.slotFilled[k]===1 ) {
+									elementMagicalPositions[k] = items[i].type;
 				        	absoluteLayout.AbsoluteLayout.setTop(eventData.object, placeholdersPositions[k].y);
 				        	absoluteLayout.AbsoluteLayout.setLeft(eventData.object, placeholdersPositions[k].x);
 				        }
@@ -138,6 +141,15 @@
 			console.log("Error: " + e.message);
 		},
 		locationOptions);
+	}
+
+	function clearPositions(geoViewModel){
+		for (var i = 0; i < geoViewModel.slotFilled.length; i++) {
+			console.log(geoViewModel.slotFilled);
+			if(geoViewModel.slotFilled[i] === 0){
+				elementMagicalPositions[i]=null;
+			}
+		}
 	}
 
 	function getWorkingSpells(){
@@ -306,7 +318,7 @@
 	}
 
 	function createItems(args, itemsOnScreen, imageWidth, imageHeight, mainLayout){
-		let items = args.object.navigationContext.selectedMagicElements;
+		items = args.object.navigationContext.selectedMagicElements;
 		for (let i = 0; i < items.length; i++) {
 
 			 let image = new imageModule.Image();
@@ -335,6 +347,7 @@
 	function checkIfPositionsAreOpene(itemsOnScreen, placeholdersPositions, geoViewModel, imageWidth, imageHeight){
 		for(let i = 0; i < placeholdersPositions.length; i++) {
 			let count = 0;
+			let index = -1;
 
 			for(var k = 0; k < itemsOnScreen.length; k+=1){
 				let currentItem = itemsOnScreen[k];
@@ -346,15 +359,20 @@
 
 				if(overlapResult >= 500) {
 					count+=1;
+					index = k;
+					console.log(elementMagicalPositions);
 				}
 			}
-			if(count>1){
-				// console.log("["+g+"]Count: " + count);
-				geoViewModel.slotFilled[i] = true;
-			} else{
-				// console.log("Freed ["+g+"]Count: " + count);
-				geoViewModel.slotFilled[i] = false;
-			}
+			geoViewModel.slotFilled[i] = count;
+			// if(count>1){
+			// 	// console.log("["+g+"]Count: " + count);
+			// 	geoViewModel.slotFilled[i] = true;
+			//
+			// } else{
+			// 	// console.log("Freed ["+g+"]Count: " + count);
+			//
+			// 	geoViewModel.slotFilled[i] = false;
+			// }
 		}
 	}
 
