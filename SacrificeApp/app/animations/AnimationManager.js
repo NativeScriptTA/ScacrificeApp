@@ -28,7 +28,7 @@
                     break;
                 case animations.Mental:
                     this.animateMental(views, screenMetrics);
-                    break;
+                break;
             }
         };
 
@@ -37,6 +37,7 @@
         };
 
         AnimationManager.prototype.animateMental = function (views, screenMetrics) {
+            let animationsCompleted = 0;
             for (let i = 0; i < views.length; i++) {
                 animateMental(views[i], screenMetrics);
             }
@@ -115,7 +116,12 @@
                 .then(function () { return view.animate({ scale: { x: 1, y: 1 } }); })
                 .then(function () { return view.animate({ translate: { x: 0, y: 0 } }); })
                 .then(function () {
-                    console.log("Mental animation finished");
+                    view.animate({
+                        opacity: 0,
+                        duration: 2000
+                    });
+
+                    console.log("Mental animation completed!");
                 })
                 .catch(function (e) {
                 console.log(e.message);
