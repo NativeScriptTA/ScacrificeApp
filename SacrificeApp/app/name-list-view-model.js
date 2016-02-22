@@ -47,8 +47,8 @@ var newNamesModel = new observable.Observable({
 });
 
 function tapCommand (args) {
-    var name = args.object.tex;
-    var acquirePage = './acquire-page';
+    var name = args.object.text;
+    var acquirePage = './spell-book-page';
     let navigationEntry = {
         moduleName: acquirePage,
         animated: true,
