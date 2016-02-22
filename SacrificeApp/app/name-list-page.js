@@ -22,7 +22,8 @@ function getUsers(newViewModel){
       if(global.currentUser['DeviceId']!=items[i]['DeviceId']) {
         let item = {
           name: items[i]['UserName'],
-          id: items[i]['Id']
+          id: items[i]['Id'],
+          health: items[i]['Health']
         }
         userNames.push(item);
       }

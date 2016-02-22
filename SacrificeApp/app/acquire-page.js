@@ -21,16 +21,15 @@ function pageLoaded(args) {
     initITemsIfNeeded();
 	  topmost = frameModule.topmost();
     page.bindingContext = mainViewModel;
-    console.log(args.object.navigationContext.spellInfo.spellName);
-
+    //console.log(args.object.navigationContext.spellInfo.spellName);
     let submitImage = view.getViewById(page, "submitImage");
-    submitImage.on(gestures.GestureTypes.tap, submitMagicElements); 
+    submitImage.on(gestures.GestureTypes.tap, submitMagicElements);
 }
 
 exports.onNavigatedTo = function (args) {
-    var selectedNameString = "What do you want to use on " +
-    args.object.navigationContext.name + "?";
-    args.object.bindingContext.setSelectedName(selectedNameString);
+    // var selectedNameString = "What do you want to use on " +
+    // args.object.navigationContext.name + "?";
+    // args.object.bindingContext.setSelectedName(selectedNameString);
 }
 
 function initITemsIfNeeded(){
@@ -81,4 +80,3 @@ function submitMagicElements(eventData) {
 }
 
 exports.pageLoaded = pageLoaded;
-

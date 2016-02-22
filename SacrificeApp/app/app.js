@@ -9,7 +9,7 @@ global.everlive = el;
 global.dbmanager = new dbmanager.DBManager();
 global.deviceID = platformModule.device.uuid;
 global.currentUser = {};
-global.targeId = "";
+global.target = {};
 
 startApplication();
 

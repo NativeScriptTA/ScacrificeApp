@@ -295,6 +295,17 @@
 				var text;
 				if(doMagic){
 					text = 'Yea!!!!';
+
+					let users = global.everlive.data('Contestant');
+					users.updateSingle({ Id: global.target.id, 'Health': global.target.health-10 },
+	    		function(data){
+	        		console.log(JSON.stringify(data));
+	    		},
+			    function(error){
+			        console.log(JSON.stringify(error));
+			    });
+
+
 				} else {
 					text = 'Damn!!!'
 				}
