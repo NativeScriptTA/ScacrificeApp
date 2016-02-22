@@ -21,18 +21,11 @@ function pageLoaded(args) {
 
       for (var i = 0; i < items.length; i++) {
         if(global.deviceID === items[i]['DeviceId']){
-          currentUser = items[i]
+          global.currentUser = items[i];
         }
       }
-      if(currentUser == null){
-        // global.everlive.data('Contestant')
-        // .create({ 'DeviceId' : global.deviceID, 'UserName': 'TestUser', 'Health': 100},
-        //   function(data){
-        //     console.log("UserRegisterd");
-        //   },
-        //   function(error){
-        //     console.log(JSON.stringify(error));
-        //   });
+      if(global.currentUser === {}){
+
 
         var acquirePage = './reg-page';
         let navigationEntry = {

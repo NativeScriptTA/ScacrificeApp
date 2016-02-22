@@ -7,6 +7,7 @@ var dbmanager = require("./dbmanager");
 global.everlive = el;
 global.dbmanager = new dbmanager.DBManager();
 global.deviceID = "thisistestid1";
+global.currentUser = {};
 
 startApplication();
 

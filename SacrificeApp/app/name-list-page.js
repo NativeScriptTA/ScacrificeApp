@@ -19,7 +19,9 @@ function getUsers(newViewModel){
     let items = data.result;
     for (var i = 0; i < items.length; i++) {
       //console.log(items[i]['UserName']);
-      userNames.push(items[i]['UserName'])
+      if(global.currentUser['DeviceId']!=items[i]['DeviceId']) {
+        userNames.push(items[i]['UserName']);
+      }
     }
     console.log(userNames);
     newViewModel.names = userNames;
