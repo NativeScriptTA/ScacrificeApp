@@ -18,7 +18,8 @@ function pageLoaded(args) {
     initITemsIfNeeded();
 	  topmost = frameModule.topmost();
     page.bindingContext = mainViewModel;
-
+    console.log('Data passed');
+    console.log(args.object.navigationContext.spellInfo.spellName);
     let gridLayout = view.getViewById(page, "magicElements");
     for(i = 1; i <= 40; i++) {
     	element = new magicElement.MagicElement("Element " + i + " name name name name", "res://icon", magicElementType.MagicElementType.SOUL);

@@ -1,0 +1,10 @@
+<Page id="page" xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" cssFile="~/name-list.css">
+  <StackLayout>
+    <ListView items="{{ spells }}">
+        <ListView.itemTemplate>
+                <Label class="name-list-item" text="{{ $value }}" tap="tapCommand"></Label>
+        </ListView.itemTemplate>
+    </ListView>
+    <Button tap="btntTapCommand" text='Try new spell'/>
+  </StackLayout>
+</Page>
