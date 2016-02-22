@@ -17,6 +17,7 @@
 	var labelModule = require("ui/label");
 	var buttonModule = require("ui/button");
 	var animationManager = require('./animations/AnimationManager.js').AnimationManager;
+	var toastModule = require("nativescript-toast");
 
 	var geolocation;
 	var needleImage;
@@ -195,18 +196,20 @@
 	}
 
 	function checkIfMagicIsSuccessful(){
-
-
 		for (var i = 0; i < workingSpells.length; i++) {
-			console.log('----> spell' + i);
 			let isCorrect = true;
 			for (var j = 0; j < elementMagicalPositions.length; j++) {
 				console.log(workingSpells[i].loc[j]);
 				if(elementMagicalPositions[j] !== parse(workingSpells[i].loc[j])){
 					console.log("Mismathc "+(elementMagicalPositions[j] + " vs " +  parse(workingSpells[i].loc[j])));
+					isCorrect = false;
 				}
 			}
+			if(isCorrect){
+				return true;
+			}
 		}
+		return false;
 	}
 
 	function parse(name){
@@ -215,7 +218,7 @@
 			case "Fire": return magicElementType.MagicElementType.FIRE;
 			case "Air": return magicElementType.MagicElementType.WIND;
 			case "Water": return magicElementType.MagicElementType.WATER;
-			case "Soul": return magicElementType.MagicElementType.SOUL;
+			case "Spirit": return magicElementType.MagicElementType.SOUL;
 			default: return -1;
 		}
 	}
@@ -288,7 +291,15 @@
 
 			if (initMagicButtonClicks == 4) {
 				initMagicButtonClicks = 0;
-				checkIfMagicIsSuccessful()
+				var doMagic = checkIfMagicIsSuccessful();
+				var text;
+				if(doMagic){
+					text = 'Yea!!!!';
+				} else {
+					text = 'Damn!!!'
+				}
+				makeToast(text);
+
 				let images = itemsOnScreen;
 				for (let i = 0; i < images.length; i++) {
 					images[i].position = {
@@ -315,9 +326,13 @@
 		container.addChild(initMagicButton);
 	}
 
+	function makeToast(text){
+    console.log("my-experience-page -> makeToast");
+    var toast = toastModule.makeText(text);
+    toast.show();
+}
 
-
-	function releaseItemArea(itemLeft, itemTop, itemWidth, itemHeight) {
+function releaseItemArea(itemLeft, itemTop, itemWidth, itemHeight) {
 		for(let i = 0; i < occupiedAreas.length; i++) {
 			if(area(occupiedAreas[i].left, occupiedAreas[i].top, itemWidth, itemHeight, itemLeft,
 		         	itemTop, itemWidth, itemHeight) > 0) {

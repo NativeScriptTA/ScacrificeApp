@@ -26,7 +26,7 @@ class MagicElement {
 		switch(name) {
 			case "earth": return magicElementType.MagicElementType.EARTH;
 			case "fire": return magicElementType.MagicElementType.FIRE;
-			case "wind": return magicElementType.MagicElementType.WIND;
+			case "air": return magicElementType.MagicElementType.WIND;
 			case "water": return magicElementType.MagicElementType.WATER;
 			case "soul": return magicElementType.MagicElementType.SOUL;
 			default: return -1;
