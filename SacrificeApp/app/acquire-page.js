@@ -25,14 +25,6 @@ function pageLoaded(args) {
 
     let submitImage = view.getViewById(page, "submitImage");
     submitImage.on(gestures.GestureTypes.tap, submitMagicElements); 
-
-    let gridLayout = view.getViewById(page, "magicElements");
-    for(i = 1; i <= 40; i++) {
-    	element = new magicElement.MagicElement("Element " + i + " name name name name", "res://icon", magicElementType.MagicElementType.SOUL);
-    	magicElements.push(element);
-    }
-
-    vmModule.mainViewModel.loadMagicElementsOnGrid(gridLayout, magicElements, selectedIndicies);
 }
 
 exports.onNavigatedTo = function (args) {
@@ -51,8 +43,8 @@ function initITemsIfNeeded(){
     for(var i = 0; i < data.length; i++) {
       console.log('items ----> ' + i);
       console.log('items ----> ' + data[i].name);
-      console.log('items ----> ' + magicElementType.MagicElementType.SOUL);
-    	let element = new magicElement.MagicElement( data[i].name, "res://"+data[i].name, magicElementType.MagicElementType.SOUL);
+      console.log('items ----> ' + data[i].type);
+    	let element = new magicElement.MagicElement( data[i].name, "res://"+data[i].name, magicElement.MagicElement.parseElementType(data[i].type));
       console.log(magicElements.length);
     	magicElements.push(element);
     }

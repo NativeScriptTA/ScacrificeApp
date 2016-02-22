@@ -45,6 +45,76 @@
 }
 
 #menuItemsLayout {
+    margin-top: 400;
+}
+
+.menu-button {
+    color: #FFFFFF;
+}
+
+#tutorialMainLayout { 
+    background-image: url("res://puppetmaster");
+    background-size: 1080 1920;
+    background-repeat: no-repeat;
+}
+
+#tutorialText {
+    color: #FFFFFF;
+    width: 100;
+    height: 500;
+    font-size: 16;
+    font-family: danielbd;
+}
+
+#stopTutorial {
+    color: #FFFFFF;
+}.title {
+    font-size: 30;
+    horizontal-align: center;
+    margin: 20;
+}
+
+.message {
+    font-size: 20;
+    color: #284848;
+    horizontal-align: center;
+}
+
+.menu-option {
+	font-size: 20;
+	text-decoration: underline;
+	width: 100%;
+	text-align: center;
+	background-color: green;
+}
+
+.initMagicButton {
+    background-image: url('res://red_button');
+    width: 50;
+	height: 50;
+	background-color: 'red';
+	border-radius: 50;
+}
+
+#acquirePageScrollView {
+    background-image: url("res://books");
+    background-size: 1080 250;
+    background-repeat: repeat-y;
+}
+
+#acquirePageMainLayout {
+    background-image: url("res://books");
+    background-size: 1080 250;
+    background-repeat: repeat-y;
+}
+
+#menuMainLayout {
+    background-image: url("res://death");
+    background-size: 1080 1920;
+    background-repeat: no-repeat;
+}
+
+#menuItemsLayout {
     margin-top: 350;
 }
 
