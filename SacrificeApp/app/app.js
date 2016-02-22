@@ -6,15 +6,12 @@ var dbmanager = require("./dbmanager");
 
 global.everlive = el;
 global.dbmanager = new dbmanager.DBManager();
-global.deviceID = "thisistestid";
+global.deviceID = "thisistestid1";
 
 startApplication();
 
 
 function startApplication(){
-
-  console.log("AppStart");
-
     application.mainModule = "menu-page";
     application.cssFile = "./app.css";
     application.start();

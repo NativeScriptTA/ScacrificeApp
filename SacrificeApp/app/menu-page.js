@@ -25,14 +25,24 @@ function pageLoaded(args) {
         }
       }
       if(currentUser == null){
-        global.everlive.data('Contestant')
-        .create({ 'DeviceId' : global.deviceID, 'UserName': 'TestUser', 'Health': 100},
-          function(data){
-            console.log("UserRegisterd");
-          },
-          function(error){
-            console.log(JSON.stringify(error));
-          });
+        // global.everlive.data('Contestant')
+        // .create({ 'DeviceId' : global.deviceID, 'UserName': 'TestUser', 'Health': 100},
+        //   function(data){
+        //     console.log("UserRegisterd");
+        //   },
+        //   function(error){
+        //     console.log(JSON.stringify(error));
+        //   });
+
+        var acquirePage = './reg-page';
+        let navigationEntry = {
+            moduleName: acquirePage,
+            animated: true,
+            navigationTransition: {
+                transition: "flip ",
+            }
+        };
+        frameModule.topmost().navigate(navigationEntry);
       } else {
         console.log("Already Registerd Device");
       }
