@@ -1,11 +1,10 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatedTo="onNavigatedTo" loaded="pageLoaded">
-	<StackLayout>
-	<Button text="Make Magic" tap="submitMagicElements" width="200" />
-	<Label text="{{ selectedName }}" />
-	<ScrollView height="480">
-		<GridLayout id="magicElements">
-		</GridLayout>
-	</ScrollView>
-
+	<StackLayout id="acquirePageMainLayout">
+		<Image src="res://spellbook" width="150" height="150" id="submitImage" />
+		<Label text="{{ selectedName }}" />
+		<ScrollView height="480" id="acquirePageScrollView">
+			<GridLayout id="magicElements">
+			</GridLayout>
+		</ScrollView>
 	</StackLayout>
 </Page>
