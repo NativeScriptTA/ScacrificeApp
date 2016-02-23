@@ -43,6 +43,11 @@
     background-size: 1080 1920;
     background-repeat: no-repeat;
 }
+#mainLayout {
+    background-image: url("res://pentagram");
+    background-size: 1080 1920;
+    background-repeat: no-repeat;
+}
 
 #menuItemsLayout {
     margin-top: 400;
@@ -52,7 +57,7 @@
     color: #FFFFFF;
 }
 
-#tutorialMainLayout { 
+#tutorialMainLayout {
     background-image: url("res://puppetmaster");
     background-size: 1080 1920;
     background-repeat: no-repeat;
