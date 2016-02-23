@@ -1,0 +1,6 @@
+<Page id="page" xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" cssFile="~/name-list.css">
+  <StackLayout>
+    <Label text="{{'Health: ' + name}}"/>
+    <Label text="{{'Health: ' + health}}"/>
+  </StackLayout>
+</Page>

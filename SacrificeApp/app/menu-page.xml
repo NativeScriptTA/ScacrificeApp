@@ -3,7 +3,7 @@
   	<StackLayout id="menuItemsLayout">
     	<Button text="{{buttonLabels[0]}}" id="{{buttonLabels[0]}}" tap="{{menuTapCommand}}" class="menu-button" />
 	    <Button text='{{buttonLabels[1]}}' id='{{buttonLabels[1]}}' tap="{{menuTapCommand}}" class="menu-button" />
-	    <Button text='{{buttonLabels[2]}}' id='{{buttonLabels[2]}}' class="menu-button" />
+	    <Button text='{{buttonLabels[2]}}' id='{{buttonLabels[2]}}' tap="{{menuTapCommand}}" class="menu-button" />
     </StackLayout>
   </StackLayout>
 </Page>

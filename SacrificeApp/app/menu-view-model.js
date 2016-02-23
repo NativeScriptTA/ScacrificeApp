@@ -6,7 +6,8 @@
 
     var pagePaths = {
       "Play": "./name-list-page",
-      "Tutorial": "./tutorial-page"
+      "Tutorial": "./tutorial-page",
+      "About": "./status-page"
     };
 
     var viewModel = new observable({
