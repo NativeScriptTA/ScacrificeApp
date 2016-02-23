@@ -1,4 +1,16 @@
 {
-    "esnext" : "true",
-    "devel": "true"
+  // Details: https://github.com/victorporof/Sublime-JSHint#using-your-own-jshintrc-options
+  // Example: https://github.com/jshint/jshint/blob/master/examples/.jshintrc
+  // Documentation: http://www.jshint.com/docs/
+  "browser": true,
+  "esnext": true,
+  "globals": {
+  	"require": false,
+  	"global": false,
+  	"console": false,
+  	"exports": false
+  },
+  "strict": "global",
+  "undef": true,
+  "unused": true
 }

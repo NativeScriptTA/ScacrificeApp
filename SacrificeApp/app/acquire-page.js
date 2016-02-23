@@ -3,10 +3,8 @@
     let view = require("ui/core/view"),
         frameModule = require("ui/frame"),
         magicElement = require("./models/magicElement"),
-        magicElementType = require("./models/magicElementType"),
         dialogs = require("ui/dialogs"),
         vmModule = require("./acquire-view-model"),
-        everlvie = require("./app.js"),
         gestures = require("ui/gestures");
 
     let page,

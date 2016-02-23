@@ -2,7 +2,8 @@
     'use strict';
     var view = require("ui/core/view"),
         frameModule = require("ui/frame"),
-        menuViewModel = require("./menu-view-model");
+        menuViewModel = require("./menu-view-model"),
+        sound = require("nativescript-sound");
 
     function pageLoaded(args) {
 
@@ -20,7 +21,7 @@
             }
           }
 
-          if(userIndex < 0){
+          if(userIndex < 0) {
 
             var acquirePage = './reg-page';
             let navigationEntry = {

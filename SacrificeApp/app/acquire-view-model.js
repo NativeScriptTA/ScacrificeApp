@@ -127,7 +127,7 @@
                 label = new labelModule.Label();
                 label.fontSize = 12;
                 label.textWrap = true;
-                label.text = magicElements[i].name;
+                //label.text = magicElements[i].name;
                 label.horizontalAlignment = "center";
                 label.verticalAlignment = "center";
                 gridLayout.addChild(label);

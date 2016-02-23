@@ -38,7 +38,7 @@
                 .then(function () {
                     animateCrystal(views, screenMetrics)
                         .then(function () {
-                            for (var i = 0; i < views.length; i++) {
+                            for (let i = 0; i < views.length; i++) {
                                 rotate(views[i]);
                                 releaseSoft(views[i], 4000);
                             }

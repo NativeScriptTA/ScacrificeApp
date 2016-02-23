@@ -1,16 +1,17 @@
 {
-	"nativescript": {
-		"id": "org.nativescript.SacrificeApp",
-		"tns-android": {
-			"version": "1.5.1"
-		}
-	},
-	"dependencies": {
-		"nativescript-geolocation": "0.0.8",
-		"nativescript-sqlite": "^1.0.8",
-		"nativescript-texttospeech": "^1.1.1",
-		"nativescript-toast": "^1.2.0",
-		"rectangle-overlap": "^1.0.0",
-		"tns-core-modules": "1.5.2"
-	}
+  "nativescript": {
+    "id": "org.nativescript.SacrificeApp",
+    "tns-android": {
+      "version": "1.5.1"
+    }
+  },
+  "dependencies": {
+    "nativescript-geolocation": "0.0.8",
+    "nativescript-sound": "^1.0.4",
+    "nativescript-sqlite": "^1.0.8",
+    "nativescript-texttospeech": "^1.1.1",
+    "nativescript-toast": "^1.2.0",
+    "rectangle-overlap": "^1.0.0",
+    "tns-core-modules": "1.5.2"
+  }
 }

@@ -3,7 +3,6 @@
     var observable = require("data/observable").Observable,
         frame = require("ui/frame");
 
-
     var pagePaths = {
       "Play": "./name-list-page",
       "Tutorial": "./tutorial-page",

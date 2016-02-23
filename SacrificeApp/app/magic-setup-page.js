@@ -18,6 +18,7 @@
 		buttonModule = require("ui/button"),
 		animationManager = require('./animations/AnimationManager.js').AnimationManager,
 		toastModule = require("nativescript-toast"),
+		sound = require("nativescript-sound"),
 		geolocation,
 		needleImage,
 		screenWidth, screenHeight,
@@ -33,8 +34,10 @@
 		geoViewModel = vmModule.magicModel,
 		items = [],
 		elementMagicalPositions = [],
-		chosenFocus = '';
-
+		chosenFocus = '',
+		tada = sound.create("~/sounds/success.mp3"),
+        failure = sound.create("~/sounds/failure.mp3");
+        
 	function pageLoaded(args) {
 
 		screenWidth = platformModule.screen.mainScreen.widthDIPs;
@@ -296,6 +299,8 @@
 				if(doMagic){
 					text = 'Yea!!!!';
 
+					tada.play();
+
 					let users = global.everlive.data('Contestant');
 					users.updateSingle({ Id: global.target.id, 'Health': global.target.health-10 },
 	    		function(data){
@@ -305,10 +310,12 @@
 			        console.log(JSON.stringify(error));
 			    });
 
-
 				} else {
 					text = 'Damn!!!';
+
+					failure.play();
 				}
+
 				makeToast(text);
 
 				let images = itemsOnScreen;
