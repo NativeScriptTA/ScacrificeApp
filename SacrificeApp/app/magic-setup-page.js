@@ -1,40 +1,39 @@
 (function () {
 	'use strict';
-	var dialogs = require("ui/dialogs");
-	var button = require("ui/button");
-	var view = require("ui/core/view");
-	var frameModule = require("ui/frame");
-	var magicElement = require("./models/magicElement");
-	var magicElementType = require("./models/magicElementType.js");
-	var geometry = require("./models/point");
-	var gestures = require("ui/gestures");
-	var absoluteLayout = require("ui/layouts/absolute-layout");
-	var imageModule = require("ui/image");
-	var platformModule = require("platform");
-	var vmModule = require("./magic-setup-view-model");
-	var area = require("rectangle-overlap");
-	var stackLayout = require("ui/layouts/stack-layout");
-	var labelModule = require("ui/label");
-	var buttonModule = require("ui/button");
-	var animationManager = require('./animations/AnimationManager.js').AnimationManager;
-	var toastModule = require("nativescript-toast");
-
-	var geolocation;
-	var needleImage;
-	var screenWidth, screenHeight;
-	var isMagicMenuShown = false;
-	var mainLayout, magicMenu;
-	var page;
-	var initMagicButtonClicks = 0;
-	var occupiedAreas = [];
-	var itemsOnScreen = [];
-	var magicButtons = [];
-	var dialogResult = "";
-	var workingSpells = [];
-	var geoViewModel = vmModule.magicModel;
-	var items = [];
-	var elementMagicalPositions = [];
-	var chosenFocus = '';
+	let dialogs = require("ui/dialogs"),
+		button = require("ui/button"),
+		view = require("ui/core/view"),
+		frameModule = require("ui/frame"),
+		magicElement = require("./models/magicElement"),
+		magicElementType = require("./models/magicElementType.js"),
+		geometry = require("./models/point"),
+		gestures = require("ui/gestures"),
+		absoluteLayout = require("ui/layouts/absolute-layout"),
+		imageModule = require("ui/image"),
+		platformModule = require("platform"),
+		vmModule = require("./magic-setup-view-model"),
+		area = require("rectangle-overlap"),
+		stackLayout = require("ui/layouts/stack-layout"),
+		labelModule = require("ui/label"),
+		buttonModule = require("ui/button"),
+		animationManager = require('./animations/AnimationManager.js').AnimationManager,
+		toastModule = require("nativescript-toast"),
+		geolocation,
+		needleImage,
+		screenWidth, screenHeight,
+		isMagicMenuShown = false,
+		mainLayout, magicMenu,
+		page,
+		initMagicButtonClicks = 0,
+		occupiedAreas = [],
+		itemsOnScreen = [],
+		magicButtons = [],
+		dialogResult = "",
+		workingSpells = [],
+		geoViewModel = vmModule.magicModel,
+		items = [],
+		elementMagicalPositions = [],
+		chosenFocus = '';
 
 	function pageLoaded(args) {
 
@@ -53,12 +52,12 @@
 
 		getWorkingSpells();
 		page = args.object;
-		let viewModel = new vmModule.MakeMagicModel();
-		let magicMenuWidth = geoViewModel.magicMenuWidth;
-		let magicMenuHeight = geoViewModel.magicMenuHeight;
-		let imageWidth = geoViewModel.imageWidth;
-		let imageHeight = geoViewModel.imageHeight;
-		let placeholdersPositions = geoViewModel.pentagramPoints;
+		let viewModel = new vmModule.MakeMagicModel(),
+			magicMenuWidth = geoViewModel.magicMenuWidth,
+			magicMenuHeight = geoViewModel.magicMenuHeight,
+			imageWidth = geoViewModel.imageWidth,
+			imageHeight = geoViewModel.imageHeight,
+			placeholdersPositions = geoViewModel.pentagramPoints;
 		mainLayout = view.getViewById(page, "mainLayout");
 
 		console.log("itemsOnScreen");
@@ -77,11 +76,11 @@
 			let image = itemsOnScreen[i];
 				// add gesture observer
 	    	  image.observe(gestures.GestureTypes.pan, function (eventData) {
-			      let deltaX = eventData.deltaX;
-			      let deltaY = eventData.deltaY;
+			      let deltaX = eventData.deltaX,
+			      	deltaY = eventData.deltaY;
 
-			      let newTop = absoluteLayout.AbsoluteLayout.getTop(eventData.object) + deltaY;
-			      let newLeft = absoluteLayout.AbsoluteLayout.getLeft(eventData.object) + deltaX;
+			      let newTop = absoluteLayout.AbsoluteLayout.getTop(eventData.object) + deltaY,
+			      	newLeft = absoluteLayout.AbsoluteLayout.getLeft(eventData.object) + deltaX;
 
 			      if(newTop < 0 || newTop + imageHeight > screenHeight) {
 			      	return;
@@ -183,16 +182,17 @@
 			for (var i = 0; i < items.length; i++) {
 				//console.log(items[i]['UserName']);
 				let spell = {
-					loc: items[i]['Elements'],
-					heading: items[i]['Heading'],
-					source: items[i]['Source']
-				}
+					loc: items[i].Elements,
+					heading: items[i].Heading,
+					source: items[i].Source
+				};
+
 				workingSpells.push(spell);
 			}
 			console.log(workingSpells[0].loc);
 		}, function(err) {
 			console.log(err.message);
-		})
+		});
 	}
 
 	function checkIfMagicIsSuccessful(){
@@ -307,7 +307,7 @@
 
 
 				} else {
-					text = 'Damn!!!'
+					text = 'Damn!!!';
 				}
 				makeToast(text);
 
@@ -442,15 +442,6 @@ function releaseItemArea(itemLeft, itemTop, itemWidth, itemHeight) {
 				}
 			}
 			geoViewModel.slotFilled[i] = count;
-			// if(count>1){
-			// 	// console.log("["+g+"]Count: " + count);
-			// 	geoViewModel.slotFilled[i] = true;
-			//
-			// } else{
-			// 	// console.log("Freed ["+g+"]Count: " + count);
-			//
-			// 	geoViewModel.slotFilled[i] = false;
-			// }
 		}
 	}
 

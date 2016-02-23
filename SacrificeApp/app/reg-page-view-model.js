@@ -1,10 +1,11 @@
-"use strict";
-var observable = require("data/observable").Observable;
-var reg = new observable({
-  name: "",
-  dataToBePassed: {}
-});
+(function () {
+    "use strict";
+    
+    var observable = require("data/observable").Observable,
+        reg = new observable({
+            name: "",
+            dataToBePassed: {}
+        });
 
-
-
-exports.viewModel = reg;
+    exports.viewModel = reg;
+}());
