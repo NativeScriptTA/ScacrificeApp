@@ -1,7 +1,7 @@
 (function () {
     'use strict';
-    var observable = require("data/observable").Observable;
-    var frame = require("ui/frame");
+    var observable = require("data/observable").Observable,
+        frame = require("ui/frame");
 
 
     var pagePaths = {
@@ -16,20 +16,20 @@
     });
 
     function onMenuTapNavigate(event){
-      let button = event.object;
-      let id = button.id;
-      let topmost = frame.topmost();
-      let navigationEntry = {
+        let button = event.object,
+        id = button.id,
+        topmost = frame.topmost();
+
+        let navigationEntry = {
           moduleName: pagePaths[id],
           animated: true,
           navigationTransition: {
               transition: "flip ",
           }
-      };
+        };
 
-      topmost.navigate(navigationEntry);
-
-      console.log(id);
+        topmost.navigate(navigationEntry);
+        console.log(id);
     }
 
     exports.viewModel = viewModel;

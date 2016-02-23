@@ -44,6 +44,46 @@
             };
         };
 
+        DefaultAnimations.prototype.middleScreen = function (view, screenMetrics) {
+            return {
+                translate: {
+                    x: screenMetrics.widthDIPs / 2 - view.width / 2 - view.position.x,
+                    y: screenMetrics.heightDIPs / 2 - view.height - view.position.y
+                },
+                target: view
+            };
+        };
+
+        DefaultAnimations.prototype.scale = function (view, times, duration) {
+            return {
+                 scale: {
+                      x: times || 3,
+                       y: times || 3
+                   },
+                   duration: duration || 4000,
+                   target: view
+             };
+        };
+
+        DefaultAnimations.prototype.rotate = function (view, degrees, duration) {
+            return {
+                 rotate: degrees || 15,
+                 duration: duration || 100,
+                 target: view
+             };
+        };
+
+        DefaultAnimations.prototype.translate = function (view, x, y, duration) {
+            return {
+                translate: {
+                    x: x || 0,
+                    y: y || 0
+                },
+                duration: duration || 1000,
+                target: view
+            };
+        };
+
         DefaultAnimations.prototype.rotation = function (iterationsCount) {
             return {
                 rotate: 360,

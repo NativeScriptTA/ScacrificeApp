@@ -1,18 +1,17 @@
 (function () {
     "use strict";
 
-    var textToSpeechModule = require("nativescript-texttospeech");
-    var view = require("ui/core/view");
-    var absoluteLayout = require("ui/layouts/absolute-layout");
+    var textToSpeechModule = require("nativescript-texttospeech"),
+        view = require("ui/core/view"),
+        absoluteLayout = require("ui/layouts/absolute-layout");
 
     function pageLoaded(args) {
-        let page = args.object;
-        let tutorialText = page.getViewById("tutorialText").text;
+        let page = args.object,
+            tutorialText = page.getViewById("tutorialText").text,
+            mainLayout = view.getViewById(page, "tutorialMainLayout"),
+            stopTutorialButton = view.getViewById(page, "stopTutorial");
+
         textToSpeechModule.speak(tutorialText);
-
-        let mainLayout = view.getViewById(page, "tutorialMainLayout");
-        let stopTutorialButton = view.getViewById(page, "stopTutorial");
-
         absoluteLayout.AbsoluteLayout.setTop(stopTutorialButton, 500);
 		absoluteLayout.AbsoluteLayout.setLeft(stopTutorialButton, 150);
 

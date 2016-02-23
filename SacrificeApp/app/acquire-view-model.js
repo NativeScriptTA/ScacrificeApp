@@ -1,10 +1,10 @@
 (function () {
     'use strict';
-    var observable = require("data/observable");
-    var imageModule = require("ui/image");
-    var labelModule = require("ui/label");
-    var dialogs = require("ui/dialogs");
-    var layout = require("ui/layouts/grid-layout");
+    var observable = require("data/observable"),
+        imageModule = require("ui/image"),
+        labelModule = require("ui/label"),
+        dialogs = require("ui/dialogs"),
+        layout = require("ui/layouts/grid-layout");
 
     var SelectMagicElementsModel = (function (_super) {
         __extends(SelectMagicElementsModel, _super);
